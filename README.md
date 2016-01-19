@@ -32,7 +32,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Contact details vc should display bottom list of details in a more reasonable way (and maybe use long press on a field to allow editing of that field) (2-3 days)
 * Contact details vc tapping on one of the contact methods should initiate contact (ie. make phone call to the given number) (1-2 hours)
 * Unit testing, I did a small amount of unit testing while figuring out and UIColor(hex:) UIColor(hexAlpha:) but overall testing is lacking (5-6 days)
-* ? Styling the last name differently (ie. bolding) in the list
+* ? Styling the last name differently (ie. bolding) in the list (30 minutes)
 
 
 ## Further Development
