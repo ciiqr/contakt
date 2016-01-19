@@ -20,7 +20,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * A generally appealing colour scheme (though overall design needs improvement)
 * Partially implemented section index titles (the sort of scroll bar with letters) which could be improved to display all letters no matter what's actually in the list, (I personally like it this way but, it makes more sense to keep it consistent with other iOS apps)
 
-### Incomplete/Missing features
+### TODO
 * The biggest missing feature is the ability to actually store the contacts and retrieve them again (currently just uses a static list) I would have liked to use either core data or sqlite for this (1-2 days)
 * Sort orders, should be able to sort based on the first or last name (with secondary sort order being the other one) (1 hour)
 * Search (filter list) (1-2 hours)
@@ -34,9 +34,6 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Unit testing, I did a small amount of unit testing while figuring out and UIColor(hex:) UIColor(hexAlpha:) but overall testing is lacking (5-6 days)
 * ? Styling the last name differently (ie. bolding) in the list (30 minutes)
 
-
-## Further Development
-For the most recent version of the app switch to the [develop branch](https://github.com/ciiqr/contakt/tree/develop) where I will be continuing development of this simple app. I intend to implement the other(incomplete) features listed above and possibly more...
 
 [//]: # (Resource References)
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
