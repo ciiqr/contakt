@@ -12,7 +12,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 	* Go to the email/phone app when pressed
 	* Doesn't display the button if the contact doesn't have any of the specific type (email or phone) (first 2 in sample data are examples of this)
 * Display the contacts with their full name and middle initial in the list
-	* aswell as their optional nickname
+	* as well as their optional nickname
 * Display their associated photo (or the default if they don't have one...)
 * Go to the contact details vc when pressed and display more contact information
 * Display (in the contact details vc) the photo as 1/3 of the size of the parent no matter the device or orientation with the full name taking up the other 2/3 of space
@@ -36,7 +36,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 
 
 ## Further Development
-For the most recent version of the app switch to the [develop branch](https://github.com/ciiqr/contakt/tree/master) where I will be continuing development of this simple app. I intend to implement the other(incomplete) features listed above and possibly more...
+For the most recent version of the app switch to the [develop branch](https://github.com/ciiqr/contakt/tree/develop) where I will be continuing development of this simple app. I intend to implement the other(incomplete) features listed above and possibly more...
 
 [//]: # (Resource References)
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
