@@ -36,25 +36,19 @@ class Contact
     // - Title (Mr, Ms, etc)
     
     // MARK: Properties
-    func fullName(middleInitial middleInitial: Bool = false) -> String
-    {
-        if middleInitial
-        {
-            if let middleFirst = self.middleName.characters.first
-            {
-                return self.firstName + " " + String(middleFirst) + ". " + self.lastName
+    func fullName(middleInitial middleInitial: Bool = false) -> String {
+        if middleInitial {
+            if let middleFirst = self.middleName.characters.first {
+                return "\(self.firstName) \(String(middleFirst)). \(self.lastName)"
             }
         }
         // If the middle name isn't empty, display with a space after it, else, empty string
         let formattedMiddle = self.middleName.characters.count > 0 ? self.middleName + " " : ""
-        return  self.firstName + " " + formattedMiddle + self.lastName
+        return "\(self.firstName) \(formattedMiddle)\(self.lastName)"
     }
-    var lastNameFirstCharacter: String?
-    {
-        get
-        {
-            if let character = lastName.characters.first
-            {
+    var lastNameFirstCharacter: String? {
+        get {
+            if let character = lastName.characters.first {
                 return String(character)
             }
             return nil
@@ -63,8 +57,8 @@ class Contact
     
     // MARK: Constructors
     init(firstName: String = "", middleName: String = "", lastName: String = "", nickName: String? = nil,
-        gender: Gender = .None, photo: UIImage? = nil, contactMethods: [ContactMethod] = [])
-    {
+        gender: Gender = .None, photo: UIImage? = nil, contactMethods: [ContactMethod] = []) {
+            
         self.firstName = firstName
         self.middleName = middleName
         self.lastName = lastName

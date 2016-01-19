@@ -12,7 +12,7 @@ import UIKit
 enum ContactMethodInfo : CustomStringConvertible
 {
     case Email(String)
-    case Phone(String) // TODO: Maybe store this a bit differently...
+    case Phone(String) // TODO: Maybe store the phone number a bit differently...
     // TODO: Add other contact methods...
     
     var description: String {
@@ -56,16 +56,14 @@ class ContactMethod
     // TODO: There must be a better way than the above... is does keep things short elsewhere though
     
     // MARK: Constructors
-    init(_ info: ContactMethodInfo, label: String = "")
-    {
+    init(_ info: ContactMethodInfo, label: String = "") {
         self.info = info
         self.label = label
     }
 
     // MARK: Methods
     // MARK: initiate contact
-    func initiateContact() -> Bool
-    {
+    func initiateContact() -> Bool {
         switch info
         {
         case .Email(let addr):
@@ -74,27 +72,27 @@ class ContactMethod
             return initiatePhoneCall(phone)
         }
     }
-    // TODO: initiatePhone ONLY if phone is supported...
+    
     private func initiatePhoneCall(number: String) -> Bool
     {
-        if let phoneUrl = NSURL(string: "telprompt:" + number) {
+        // TODO: Consider telprompt, which is unofficial but arguably a better experience for the user (it prompts before making the call)...
+        // INFO: http://stackoverflow.com/a/27077450
+        if let phoneUrl = NSURL(string: "tel:\(number)") {
             if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
                 return UIApplication.sharedApplication().openURL(phoneUrl)
             }
         }
-        // TODO: Handle errors better
         return false
     }
     private func initiateEmail(addr: String) -> Bool
     {
-        if let email = ("mailto:" + addr).stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) {
+        if let email = ("mailto:\(addr)").stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) {
             if let mailToUrl = NSURL(string: email) {
                 if UIApplication.sharedApplication().canOpenURL(mailToUrl) {
                     return UIApplication.sharedApplication().openURL(mailToUrl)
                 }
             }
         }
-        // TODO: Handle errors better
         return false
     }
 }

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D3B37931C4D8D29002F3091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37921C4D8D29002F3091 /* AppDelegate.swift */; };
-		3D3B37951C4D8D29002F3091 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37941C4D8D29002F3091 /* MasterViewController.swift */; };
-		3D3B37971C4D8D29002F3091 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37961C4D8D29002F3091 /* DetailViewController.swift */; };
+		3D3B37951C4D8D29002F3091 /* ContactsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37941C4D8D29002F3091 /* ContactsListVC.swift */; };
+		3D3B37971C4D8D29002F3091 /* ContactDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37961C4D8D29002F3091 /* ContactDetailsVC.swift */; };
 		3D3B379A1C4D8D29002F3091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B37981C4D8D29002F3091 /* Main.storyboard */; };
 		3D3B379C1C4D8D29002F3091 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379B1C4D8D29002F3091 /* Assets.xcassets */; };
 		3D3B379F1C4D8D29002F3091 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379D1C4D8D29002F3091 /* LaunchScreen.storyboard */; };
@@ -21,6 +21,19 @@
 		3D3B37C81C4D8F18002F3091 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C61C4D8F18002F3091 /* Gender.swift */; };
 		3D3B37CD1C4D9245002F3091 /* ContactMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */; };
 		3D3B37CE1C4D9245002F3091 /* ContactMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */; };
+		3D3B37D61C4DE7F5002F3091 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37D51C4DE7F5002F3091 /* Dispatch.swift */; };
+		3D3B37D71C4DE7F5002F3091 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37D51C4DE7F5002F3091 /* Dispatch.swift */; };
+		3D3B37DA1C4E01B1002F3091 /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37D91C4E01B1002F3091 /* UIColor+hex.swift */; };
+		3D3B37DB1C4E01B1002F3091 /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37D91C4E01B1002F3091 /* UIColor+hex.swift */; };
+		3D3B37DD1C4E01F7002F3091 /* CollectionType+any.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */; };
+		3D3B37DE1C4E01F7002F3091 /* CollectionType+any.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */; };
+		3D3B37E01C4E031A002F3091 /* UIColor+hex-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */; };
+		3D3B37E21C4E758C002F3091 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E11C4E758C002F3091 /* Alert.swift */; };
+		3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E11C4E758C002F3091 /* Alert.swift */; };
+		3D3B37E61C4E81D5002F3091 /* ContactLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E51C4E81D5002F3091 /* ContactLoader.swift */; };
+		3D3B37E71C4E81D5002F3091 /* ContactLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E51C4E81D5002F3091 /* ContactLoader.swift */; };
+		3D3B37E91C4E87EF002F3091 /* Visuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E81C4E87EF002F3091 /* Visuals.swift */; };
+		3D3B37EA1C4E87EF002F3091 /* Visuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37E81C4E87EF002F3091 /* Visuals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +56,8 @@
 /* Begin PBXFileReference section */
 		3D3B378F1C4D8D29002F3091 /* contakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = contakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3B37921C4D8D29002F3091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D3B37941C4D8D29002F3091 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		3D3B37961C4D8D29002F3091 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3D3B37941C4D8D29002F3091 /* ContactsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListVC.swift; sourceTree = "<group>"; };
+		3D3B37961C4D8D29002F3091 /* ContactDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsVC.swift; sourceTree = "<group>"; };
 		3D3B37991C4D8D29002F3091 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D3B379B1C4D8D29002F3091 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D3B379E1C4D8D29002F3091 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +71,13 @@
 		3D3B37C31C4D8E62002F3091 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		3D3B37C61C4D8F18002F3091 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactMethod.swift; sourceTree = "<group>"; };
+		3D3B37D51C4DE7F5002F3091 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
+		3D3B37D91C4E01B1002F3091 /* UIColor+hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
+		3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+any.swift"; sourceTree = "<group>"; };
+		3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hex-Tests.swift"; sourceTree = "<group>"; };
+		3D3B37E11C4E758C002F3091 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		3D3B37E51C4E81D5002F3091 /* ContactLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactLoader.swift; sourceTree = "<group>"; };
+		3D3B37E81C4E87EF002F3091 /* Visuals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visuals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,14 +128,13 @@
 		3D3B37911C4D8D29002F3091 /* contakt */ = {
 			isa = PBXGroup;
 			children = (
-				3D3B37C21C4D8E13002F3091 /* Model */,
-				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
-				3D3B37941C4D8D29002F3091 /* MasterViewController.swift */,
-				3D3B37961C4D8D29002F3091 /* DetailViewController.swift */,
-				3D3B37981C4D8D29002F3091 /* Main.storyboard */,
-				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
-				3D3B379D1C4D8D29002F3091 /* LaunchScreen.storyboard */,
 				3D3B37A01C4D8D29002F3091 /* Info.plist */,
+				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
+				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
+				3D3B37D11C4DA6B0002F3091 /* Utilities */,
+				3D3B37C21C4D8E13002F3091 /* Model */,
+				3D3B37CF1C4DA627002F3091 /* View Controllers */,
+				3D3B37D01C4DA657002F3091 /* Storyboards */,
 			);
 			path = contakt;
 			sourceTree = "<group>";
@@ -125,6 +144,7 @@
 			children = (
 				3D3B37A91C4D8D29002F3091 /* contaktTests.swift */,
 				3D3B37AB1C4D8D29002F3091 /* Info.plist */,
+				3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */,
 			);
 			path = contaktTests;
 			sourceTree = "<group>";
@@ -141,11 +161,58 @@
 		3D3B37C21C4D8E13002F3091 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D3B37E41C4E81C1002F3091 /* Loaders */,
 				3D3B37C31C4D8E62002F3091 /* Contact.swift */,
 				3D3B37C61C4D8F18002F3091 /* Gender.swift */,
 				3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		3D3B37CF1C4DA627002F3091 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37941C4D8D29002F3091 /* ContactsListVC.swift */,
+				3D3B37961C4D8D29002F3091 /* ContactDetailsVC.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3D3B37D01C4DA657002F3091 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37981C4D8D29002F3091 /* Main.storyboard */,
+				3D3B379D1C4D8D29002F3091 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		3D3B37D11C4DA6B0002F3091 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37D81C4E0199002F3091 /* Extensions */,
+				3D3B37D51C4DE7F5002F3091 /* Dispatch.swift */,
+				3D3B37E11C4E758C002F3091 /* Alert.swift */,
+				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		3D3B37D81C4E0199002F3091 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37D91C4E01B1002F3091 /* UIColor+hex.swift */,
+				3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		3D3B37E41C4E81C1002F3091 /* Loaders */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37E51C4E81D5002F3091 /* ContactLoader.swift */,
+			);
+			name = Loaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,11 +347,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D3B37C41C4D8E62002F3091 /* Contact.swift in Sources */,
+				3D3B37D61C4DE7F5002F3091 /* Dispatch.swift in Sources */,
 				3D3B37C71C4D8F18002F3091 /* Gender.swift in Sources */,
-				3D3B37971C4D8D29002F3091 /* DetailViewController.swift in Sources */,
-				3D3B37951C4D8D29002F3091 /* MasterViewController.swift in Sources */,
+				3D3B37971C4D8D29002F3091 /* ContactDetailsVC.swift in Sources */,
+				3D3B37951C4D8D29002F3091 /* ContactsListVC.swift in Sources */,
 				3D3B37931C4D8D29002F3091 /* AppDelegate.swift in Sources */,
+				3D3B37DA1C4E01B1002F3091 /* UIColor+hex.swift in Sources */,
 				3D3B37CD1C4D9245002F3091 /* ContactMethod.swift in Sources */,
+				3D3B37E21C4E758C002F3091 /* Alert.swift in Sources */,
+				3D3B37DD1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,
+				3D3B37E61C4E81D5002F3091 /* ContactLoader.swift in Sources */,
+				3D3B37E91C4E87EF002F3091 /* Visuals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,9 +365,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D3B37DB1C4E01B1002F3091 /* UIColor+hex.swift in Sources */,
 				3D3B37C81C4D8F18002F3091 /* Gender.swift in Sources */,
 				3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */,
+				3D3B37DE1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,
+				3D3B37D71C4DE7F5002F3091 /* Dispatch.swift in Sources */,
+				3D3B37E71C4E81D5002F3091 /* ContactLoader.swift in Sources */,
+				3D3B37EA1C4E87EF002F3091 /* Visuals.swift in Sources */,
+				3D3B37E01C4E031A002F3091 /* UIColor+hex-Tests.swift in Sources */,
 				3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */,
+				3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */,
 				3D3B37CE1C4D9245002F3091 /* ContactMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,6 +594,7 @@
 				3D3B37BB1C4D8D29002F3091 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D3B37BC1C4D8D29002F3091 /* Build configuration list for PBXNativeTarget "contaktTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +603,7 @@
 				3D3B37BE1C4D8D29002F3091 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D3B37BF1C4D8D29002F3091 /* Build configuration list for PBXNativeTarget "contaktUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +612,7 @@
 				3D3B37C11C4D8D29002F3091 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

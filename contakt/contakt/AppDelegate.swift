@@ -20,6 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
+        
+        // Change the colour of the navbar
+        UINavigationBar.appearance().barTintColor = Visuals.navBarColour
+        UINavigationBar.appearance().tintColor = Visuals.navBarTint
+        UINavigationBar.appearance().titleTextAttributes = Visuals.navBarTextAttributes
+        
+        // Change table view colours
+        UITableView.appearance().backgroundColor = Visuals.backgroundColour
+        UITableViewCell.appearance().backgroundColor = Visuals.backgroundColour
+
         return true
     }
 
@@ -49,8 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
-        if topAsDetailController.detailItem == nil {
+        guard let topAsDetailController = secondaryAsNavController.topViewController as? ContactDetailsVC else { return false }
+        if topAsDetailController.contact == nil {
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
         }

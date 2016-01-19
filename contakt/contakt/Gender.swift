@@ -13,10 +13,7 @@ enum Gender : String, CustomStringConvertible
     case None
     case Male
     case Female
-    case Agender
-    case TransMTF
-    case TransFTM
-    // TODO: Others...
+    case NonBinary
     
     var description: String {
         get {
