@@ -46,6 +46,14 @@ class Contact
         let formattedMiddle = self.middleName.characters.count > 0 ? self.middleName + " " : ""
         return "\(self.firstName) \(formattedMiddle)\(self.lastName)"
     }
+    var firstNameFirstCharacter: String? {
+        get {
+            if let character = firstName.characters.first {
+                return String(character)
+            }
+            return nil
+        }
+    }
     var lastNameFirstCharacter: String? {
         get {
             if let character = lastName.characters.first {

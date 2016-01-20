@@ -26,6 +26,6 @@ class Visuals
     static let backgroundColour = lightGray
     
     // Contacts List
-    static let contactSwipePhoneAction = lightGreen
-    static let contactSwipeEmailAction = lightPurple
+    static let contactSwipePhoneActionColour = lightGreen
+    static let contactSwipeEmailActionColour = lightPurple
 }

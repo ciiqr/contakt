@@ -8,21 +8,58 @@
 
 import UIKit
 
+enum ContactsSortOrder {
+    case LastName
+    case FirstName
+    // TODO: Other sort orders?
+}
+
 class ContactsListVC: UITableViewController
 {
     // MARK: Instance Variables
     var detailViewController: ContactDetailsVC? = nil
     
-    var sectionHeaders = [String]()
-    // TODO: Would prefer this as a single collection (a map of section titles to contact arrays) but swift doesn't have an ordered dictionary and so this is simpler for this small demo application, the count of contacts and section headers should be the same
-    var contacts = [[Contact]]()
+    // TODO: Consider
+    // This is an unsorted list of contacts
+    var contactsList = [Contact]()
+    // This is a sorted dictionary mapping section headers to lists of contacts
+    // TODO: Will want to sort the [Contact] arrays based on the secondary sort order...
+    // TODO: Change the array below to be an OrderedArray that sorts based on sortOrderKey(secondarySortOrder, forContact: contact)
+    var filteredContacts = OrderedDictionary<String, [Contact]>()
+    
+    static let selectableSortOrders: [ContactsSortOrder] = [.FirstName, .LastName]
+    var primarySortOrder = ContactsSortOrder.LastName {
+        didSet {
+            // Only re-sort if the sort order has changed
+            if primarySortOrder == oldValue {
+                return
+            }
+            // re-order contatcs based on new sort order...
+            updateFilteredContacts()
+            
+            // Update ui
+            tableView.reloadData()
+        }
+    }
+    var secondarySortOrder: ContactsSortOrder {
+        switch primarySortOrder
+        {
+        case .FirstName:
+            return .LastName;
+        case .LastName:
+            return .FirstName;
+        }
+    }
     
     // MARK: Life Cycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Adjust the colour of the letters
+        // TODO: Create 2 special properties for these contactsListSectionIndexColor, contactsListSectionIndexBackgroundColor
         tableView.sectionIndexColor = Visuals.navBarColour
+        tableView.sectionIndexBackgroundColor = Visuals.backgroundColour
+        // TODO: Consider dynamically setting tableView.sectionIndexMinimumDisplayRowCount based on the current size and number of visible rows... This way we can have it only display if there's a lot of contacts...
         
         // Add additional views
         loadSortOrderSwitcher()
@@ -51,7 +88,8 @@ class ContactsListVC: UITableViewController
             if let index = self.tableView.indexPathForSelectedRow {
                 // TODO: Remove use of force unwrapping
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ContactDetailsVC
-                controller.contact = contacts[index.section][index.row]
+                // TODO: Ensure we actuallt have these indexes...?
+                controller.contact = filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -61,18 +99,17 @@ class ContactsListVC: UITableViewController
     // MARK: Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // TODO: Support different sorting orders...
-        
-        return sectionHeaders.count
+        return filteredContacts.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionHeaders[section]
+        // TODO: What happens when the section header is more than a single character?...
+        return self.filteredContacts[OrderedDictionaryIndex(section)].key
     }
     
     // TODO: Change this so it lists all letters, #, and then a final one for other characters...
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-        return sectionHeaders;
+        return [String](self.filteredContacts.keys)
     }
     
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
@@ -80,8 +117,8 @@ class ContactsListVC: UITableViewController
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < contacts.count {
-            return contacts[section].count
+        if section < filteredContacts.count {
+            return filteredContacts[OrderedDictionaryIndex(section)].value.count
         }
         return 0
     }
@@ -89,7 +126,7 @@ class ContactsListVC: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath)
         
-        let contact = contacts[indexPath.section][indexPath.row]
+        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row]
         
         cell.textLabel!.text = contact.fullName(middleInitial: true)
         
@@ -117,12 +154,41 @@ class ContactsListVC: UITableViewController
         return true
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath index: NSIndexPath) {
-        if editingStyle == .Delete {
-            contacts.removeAtIndex(index.row)
+    // TODO: Move
+    private func removeContact(index: NSIndexPath)
+    {
+        let dictionaryKey = filteredContacts[OrderedDictionaryIndex(index.section)].key
+        let arrayIndex = index.row
+        
+        // NOTE: Because arrays are value types, we need to make a new one and then re-assign, hopefully the compiler will recognize this and optimize...
+        // TODO: Test the performance of this...
+        
+        // Get the contact array
+        var potentialSectionContacts = filteredContacts[dictionaryKey]
+        // TODO: if the above is nil, something went wrong...
+        assert(potentialSectionContacts != nil)
+        
+        // Remove the contact
+        // TODO: also need to delete from contactsList...
+        potentialSectionContacts?.removeAtIndex(arrayIndex)
+        
+        // Either
+        if potentialSectionContacts?.count > 0 {
+            // Remove the row
             tableView.deleteRowsAtIndexPaths([index], withRowAnimation: .Fade)
         }
+        else {
+            // Remove the entire section
+            tableView.deleteSections(NSIndexSet(index: index.section), withRowAnimation: .Fade)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath index: NSIndexPath) {
+        if editingStyle == .Delete {
+            removeContact(index)
+        }
         else if editingStyle == .Insert {
+            // TODO: Implement (If section already exists, insert appropriatly, else, insert new section with given row)
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
@@ -130,20 +196,20 @@ class ContactsListVC: UITableViewController
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         // NOTE: This only displays the actions that the specific contact supports
         
-        let contact = contacts[indexPath.section][indexPath.row]
+        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row] // TODO: Create a func contactFor(indexPath: NSIndexPath)
         var actions = [UITableViewRowAction]()
         
         // Has at least 1 email
         if contact.contactMethods.any({$0.isEmail}) {
             let email = UITableViewRowAction(style: .Normal, title: "Email", handler: emailActionHandler)
-            email.backgroundColor = Visuals.contactSwipeEmailAction
+            email.backgroundColor = Visuals.contactSwipeEmailActionColour
             actions.append(email)
         }
         
         // Has at least 1 phone
         if contact.contactMethods.any({$0.isPhone}) {
             let phone = UITableViewRowAction(style: .Normal, title: "Phone", handler: phoneActionHandler)
-            phone.backgroundColor = Visuals.contactSwipePhoneAction
+            phone.backgroundColor = Visuals.contactSwipePhoneActionColour
             actions.append(phone)
         }
         
@@ -152,15 +218,65 @@ class ContactsListVC: UITableViewController
     
     // MARK: Utilitiy Functions
     
+    private func contactSection(contact: Contact) -> String? {
+        return sortOrderKey(primarySortOrder, forContact: contact)
+    }
+    
+    private func sortOrderKey(sortOrder: ContactsSortOrder, forContact contact: Contact) -> String? {
+        // TODO: Decide if I don't want to just force title case for the names, making this irrelevant...
+        switch sortOrder
+        {
+        case .FirstName:
+            if let character = contact.firstNameFirstCharacter {
+                return character.uppercaseString
+            }
+            break
+            
+        case .LastName:
+            if let character = contact.lastNameFirstCharacter {
+                return character.uppercaseString
+            }
+            break
+        }
+        return nil
+    }
+    
+    private func updateFilteredContacts() {
+        // Remove old contatcs
+        // TODO: Maybe rename to orderedContacts...
+        self.filteredContacts.removeAll(keepCapacity: true)
+        
+        // Add all new contacts...
+        for contact in self.contactsList {
+            // TODO: move some of this to a separate method with a parameter for whether to update the ui...
+            if let sectionHeader = self.contactSection(contact) {
+                // Either
+                if let _ = self.filteredContacts[sectionHeader] {
+                    // append to existing array
+                    self.filteredContacts[sectionHeader]!.append(contact)
+                }
+                else { // create a new array
+                    self.filteredContacts[sectionHeader] = [contact]
+                }
+            }
+            else {
+                // TODO: Handle improper contact without section
+            }
+        }
+    }
+    
     private func loadContacts() {
         // TODO: There should be loading indicators...
         // TODO: Will need ensure the data is in the correct order... based on the current sort order
         
         // TODO: App delegate should start loading/caching the contacts as soon as possible so that we can retrieve them slightly faster once we get here
-        ContactLoader.loadContacts { (sectionHeaders, contacts) in
+        
+        // TODO: Store contacts array and when the sort order changes, it needs to change... the contacts dictionary pretty much entirely...
+        ContactLoader.loadContacts { (contacts) in
             // TODO: This should check if there's any existing contacts in the array and merge the lists (in the case where loading takes a while and the user has added a new contact in the mean time)
-            self.sectionHeaders = sectionHeaders
-            self.contacts = contacts
+            
+            self.contactsList = contacts
+            self.updateFilteredContacts()
             
             self.onDoneLoadingContacts()
         }
@@ -171,41 +287,31 @@ class ContactsListVC: UITableViewController
         
         // TODO: Need to fix this... atm we don't display the contacts info until the user selects one of them... ugh
         // NOTE: window is a double optional...
-        if let split = self.splitViewController {
-            // Ensure we're displaying the detailVC
-            if split.collapsed && contacts.count > 0 && contacts[0].count > 0 {
-                // Select the first contact
-                // TODO: should use selectRowAtIndexPath instead
-                self.detailViewController?.contact = contacts[0][0]
-            }
-        }
+        //        if let split = self.splitViewController {
+        // Ensure we're displaying the detailVC
+        // TODO: Fix this up a bit
+        //            if split.collapsed && contacts.count > 0 && contacts[0].count > 0 {
+        //                // Select the first contact
+        //                // TODO: should use selectRowAtIndexPath instead
+        //                self.detailViewController?.contact = contacts[0][0]
+        //            }
+        //        }
     }
     
     func onSortOrderSwitcherChange(segment: UISegmentedControl) {
-        Alert.displaySimple(self, title: "Sorry!", message: "This feature has not been implemented yet...")
-        
-        // TODO: These should be more closely linked with the actual array below...
-        let FIRST_NAME_INDEX = 0
-        let LAST_NAME_INDEX = 1
-        
-        // TODO: Implement these...
-        switch (segment.selectedSegmentIndex)
-        {
-        case FIRST_NAME_INDEX:
-            
-            break;
-        case LAST_NAME_INDEX:
-            
-            break;
-        default:
-            // TODO: Handle error...
-            break;
+        if segment.selectedSegmentIndex >= ContactsListVC.selectableSortOrders.count {
+            // TODO: Handle error index...
         }
+        
+        // Update sort order
+        self.primarySortOrder = ContactsListVC.selectableSortOrders[segment.selectedSegmentIndex]
     }
     
     private func loadSortOrderSwitcher() {
         // TODO: Would be nice to support other orders...
-        let segmentedControl: UISegmentedControl = UISegmentedControl(items: ["First", "Last"])
+        // TODO:
+        
+        let segmentedControl: UISegmentedControl = UISegmentedControl(items: ContactsListVC.selectableSortOrders.map(sortOrderDisplayName))
         segmentedControl.selectedSegmentIndex = 1
         segmentedControl.addTarget(self, action: "onSortOrderSwitcherChange:", forControlEvents: .ValueChanged)
         
@@ -216,18 +322,30 @@ class ContactsListVC: UITableViewController
         // TODO: Implement add new Contact
     }
     
+    private func sortOrderDisplayName(order: ContactsSortOrder) -> String {
+        // TODO: Localized...
+        switch order
+        {
+        case .FirstName:
+            return "First"
+        case .LastName:
+            return "Last"
+        }
+    }
+    
     private func initiateContact(contact: Contact, contactMethod: ContactMethod)
     {
         if !contactMethod.initiateContact() {
             Alert.displaySimple(self, title: "Error", message: "Couldn't initiate contact with foreign entity \"\(contact.firstName)\" (doesn't work on simulators)")
         }
     }
-
+    
     // TODO: Test these on device...
     private func emailActionHandler(action: UITableViewRowAction, index: NSIndexPath) {
-        // TODO: Need to implement a better way to find the appropriate email(label=main), or just present a list
+        // TODO: Need to implement a better way to find the appropriate email(label=Main), or just present a list
         // Currently sends email to first email found
-        let contact = self.contacts[index.section][index.row]
+        // TODO: ? Ensure we have this index...
+        let contact = self.filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
         for contactMethod in contact.contactMethods {
             switch contactMethod.info
             {
@@ -242,7 +360,8 @@ class ContactsListVC: UITableViewController
     private func phoneActionHandler(action: UITableViewRowAction, index: NSIndexPath) {
         // TODO: Need to implement a better way to find the appropriate phone(label=main), or just present a list
         // Currently calls the first number found
-        let contact = self.contacts[index.section][index.row]
+        // TODO: ? Ensure we have this index...
+        let contact = self.filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
         for contactMethod in contact.contactMethods {
             switch contactMethod.info
             {
