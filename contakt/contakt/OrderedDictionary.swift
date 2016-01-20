@@ -10,7 +10,6 @@ import Foundation
 
 // TODO: Clean this up, remove duplication and implement unit tests
 
-// NOTE: Implemented as an associative array
 struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryLiteralConvertible
 {
     // MARK: - Types
