@@ -1,11 +1,13 @@
 # contakt
 iOS address book app
 
+![Screenshot][screenshot]
+
 ## Summary
 ### Approach
 I first designed on paper what I would optimally like the app to look like.
-![alt text][initial-diagram]
-Then I started thinking about the model, I wanted something flexible enough to implement the features I had in mind and not too restrictive, I decided to leverage swift's enums (which are more a [typed union](https://en.wikipedia.org/wiki/Union_type)) to have different contact methods and store the associated info along with them. Also, to simplify code elsewhere contact methods know how to initiate contact for their given type (ie. email with mailto:). The one detail I couldn't decide on was how to represent the list of contacts. What I really wanted (an OrderedDictionary) doesn't exist in the standard swift libraries, and I wanted to avoid using any external libraries for this initial project, so I ended up compromising and simply using 2 arrays to represent the section headers and contact lists.
+![The initial diagram][initial-diagram]
+Then I started thinking about the model, I wanted something flexible enough to implement the features I had in mind and not too restrictive, I decided to leverage swift's enums (which are more a [typed union](https://en.wikipedia.org/wiki/Union_type)) to have different contact methods and store the associated info along with them. Also, to simplify code elsewhere contact methods know how to initiate contact for their given type (ie. email with mailto:). When it came to implementing the contact list it was clear that I would need an [OrderedDictionary](https://github.com/ciiqr/contakt/blob/master/contakt/contakt/OrderedDictionary.swift) of which swift's standard library doesn't contain so I went about and implemented [my own](https://github.com/ciiqr/contakt/blob/master/contakt/contakt/OrderedDictionary.swift). It uses a predicate to order it's keys and is implemented as an array of tuples.
 
 ### Completed features
 * Swipe on a contact to email/phone
@@ -14,6 +16,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Display the contacts with their full name and middle initial in the list
 	* as well as their optional nickname
 * Display their associated photo (or the default if they don't have one...)
+* Sort the contacts based on first or last name
 * Go to the contact details vc when pressed and display more contact information
 * Display (in the contact details vc) the photo as 1/3 of the size of the parent no matter the device or orientation with the full name taking up the other 2/3 of space
 * The rest of the details listed below
@@ -37,3 +40,4 @@ Then I started thinking about the model, I wanted something flexible enough to i
 
 [//]: # (Resource References)
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
+[screenshot]: http://williamvilleneuve.ca/static-resources/github/contakt/images/alpha-screenshot.png "Screenshot"
