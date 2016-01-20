@@ -154,7 +154,42 @@ class ContactsListVC: UITableViewController
         return true
     }
     
-    // TODO: Move
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath index: NSIndexPath) {
+        if editingStyle == .Delete {
+            removeContact(index)
+        }
+        else if editingStyle == .Insert {
+            // TODO: Implement (If section already exists, insert appropriatly, else, insert new section with given row)
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        // NOTE: This only displays the actions that the specific contact supports
+        
+        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row] // TODO: Create a func contactFor(indexPath: NSIndexPath)
+        var actions = [UITableViewRowAction]()
+        
+        // TODO: Need contactMethodDisplayName for the Email and Phone strings
+        // Has at least 1 email
+        if contact.contactMethods.any({$0.isEmail}) {
+            let email = UITableViewRowAction(style: .Normal, title: "Email", handler: emailActionHandler)
+            email.backgroundColor = Visuals.contactSwipeEmailActionColour
+            actions.append(email)
+        }
+        
+        // Has at least 1 phone
+        if contact.contactMethods.any({$0.isPhone}) {
+            let phone = UITableViewRowAction(style: .Normal, title: "Phone", handler: phoneActionHandler)
+            phone.backgroundColor = Visuals.contactSwipePhoneActionColour
+            actions.append(phone)
+        }
+        
+        return actions
+    }
+    
+    // MARK: Utilitiy Functions
+    
     private func removeContact(index: NSIndexPath)
     {
         let dictionaryKey = filteredContacts[OrderedDictionaryIndex(index.section)].key
@@ -182,41 +217,6 @@ class ContactsListVC: UITableViewController
             tableView.deleteSections(NSIndexSet(index: index.section), withRowAnimation: .Fade)
         }
     }
-    
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath index: NSIndexPath) {
-        if editingStyle == .Delete {
-            removeContact(index)
-        }
-        else if editingStyle == .Insert {
-            // TODO: Implement (If section already exists, insert appropriatly, else, insert new section with given row)
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
-    }
-    
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        // NOTE: This only displays the actions that the specific contact supports
-        
-        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row] // TODO: Create a func contactFor(indexPath: NSIndexPath)
-        var actions = [UITableViewRowAction]()
-        
-        // Has at least 1 email
-        if contact.contactMethods.any({$0.isEmail}) {
-            let email = UITableViewRowAction(style: .Normal, title: "Email", handler: emailActionHandler)
-            email.backgroundColor = Visuals.contactSwipeEmailActionColour
-            actions.append(email)
-        }
-        
-        // Has at least 1 phone
-        if contact.contactMethods.any({$0.isPhone}) {
-            let phone = UITableViewRowAction(style: .Normal, title: "Phone", handler: phoneActionHandler)
-            phone.backgroundColor = Visuals.contactSwipePhoneActionColour
-            actions.append(phone)
-        }
-        
-        return actions
-    }
-    
-    // MARK: Utilitiy Functions
     
     private func contactSection(contact: Contact) -> String? {
         return sortOrderKey(primarySortOrder, forContact: contact)
