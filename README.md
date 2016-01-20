@@ -21,8 +21,8 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Partially implemented section index titles (the sort of scroll bar with letters) which could be improved to display all letters no matter what's actually in the list, (I personally like it this way but, it makes more sense to keep it consistent with other iOS apps)
 
 ### TODO
-* The biggest missing feature is the ability to actually store the contacts and retrieve them again (currently just uses a static list) I would have liked to use either core data or sqlite for this (1-2 days)
-* Sort orders, should be able to sort based on the first or last name (with secondary sort order being the other one) (1 hour)
+* Store the contacts in either core data or sqlite (currently just have a static list of contacts) (1-2 days)
+* Secondary sort order (30 minutes)
 * Search (filter list) (1-2 hours)
 * Create/Update/Delete contacts (6-8 days, though 3-4 for basic functionality)
 * Load contacts from facebook, google, etc (2 days each)
