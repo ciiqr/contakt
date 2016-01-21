@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Contact
+class Contact : Equatable
 {
     // MARK: Class Variables
     static let defaultPhoto = UIImage(imageLiteral: "contact-photo-default")
@@ -75,4 +75,16 @@ class Contact
         self.photo = photo
         self.contactMethods = contactMethods
     }
+}
+
+func ==(lhs: Contact, rhs: Contact) -> Bool {
+    return (lhs.firstName == rhs.firstName &&
+        lhs.middleName == rhs.middleName &&
+        lhs.lastName == rhs.lastName &&
+        lhs.nickName == rhs.nickName &&
+        lhs.gender == rhs.gender &&
+        lhs.photo == rhs.photo &&
+        // TODO: This currently doesn't check if both arrays contain the same values and for efficiency maybe shouldn't... But it's technically incomplete... Though, it might not be a big deal to compare if we assume there aren't going to be that many contactMethods...
+        lhs.contactMethods.count == rhs.contactMethods.count
+    )
 }

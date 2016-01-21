@@ -16,7 +16,7 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Display the contacts with their full name and middle initial in the list
 	* as well as their optional nickname
 * Display their associated photo (or the default if they don't have one...)
-* Sort the contacts based on first or last name
+* Sort the contacts into sections based on first or last name then sort based on the other within the sections
 * Go to the contact details vc when pressed and display more contact information
 * Display (in the contact details vc) the photo as 1/3 of the size of the parent no matter the device or orientation with the full name taking up the other 2/3 of space
 * The rest of the details listed below
@@ -25,7 +25,6 @@ Then I started thinking about the model, I wanted something flexible enough to i
 
 ### TODO
 * Store the contacts in either core data or sqlite (currently just have a static list of contacts) (1-2 days)
-* Secondary sort order (30 minutes)
 * Search (filter list) (1-2 hours)
 * Create/Update/Delete contacts (6-8 days, though 3-4 for basic functionality)
 * Load contacts from facebook, google, etc (2 days each)

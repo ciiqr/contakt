@@ -19,13 +19,12 @@ class ContactsListVC: UITableViewController
     // MARK: Instance Variables
     var detailViewController: ContactDetailsVC? = nil
     
-    // TODO: Consider
     // This is an unsorted list of contacts
     var contactsList = [Contact]()
     // This is a sorted dictionary mapping section headers to lists of contacts
     // TODO: Will want to sort the [Contact] arrays based on the secondary sort order...
     // TODO: Change the array below to be an OrderedArray that sorts based on sortOrderKey(secondarySortOrder, forContact: contact)
-    var filteredContacts = OrderedDictionary<String, [Contact]>()
+    var filteredContacts = OrderedDictionary<String, OrderedArrayEquatable<Contact>>()
     
     static let selectableSortOrders: [ContactsSortOrder] = [.FirstName, .LastName]
     var primarySortOrder = ContactsSortOrder.LastName {
@@ -89,7 +88,7 @@ class ContactsListVC: UITableViewController
                 // TODO: Remove use of force unwrapping
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ContactDetailsVC
                 // TODO: Ensure we actuallt have these indexes...?
-                controller.contact = filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
+                controller.contact = contactFor(index)
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -126,7 +125,7 @@ class ContactsListVC: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath)
         
-        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row]
+        let contact = contactFor(indexPath)
         
         cell.textLabel!.text = contact.fullName(middleInitial: true)
         
@@ -145,7 +144,7 @@ class ContactsListVC: UITableViewController
             cell.imageView!.image = Contact.defaultPhoto
         }
         
-        // TODO: Apply a circular mask to the contact photo
+        // TODO: Apply a circular mask to the contact photo (also, default photo should have a white background once  get around to doing this)
         
         return cell
     }
@@ -167,7 +166,7 @@ class ContactsListVC: UITableViewController
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         // NOTE: This only displays the actions that the specific contact supports
         
-        let contact = filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row] // TODO: Create a func contactFor(indexPath: NSIndexPath)
+        let contact = contactFor(indexPath)
         var actions = [UITableViewRowAction]()
         
         // TODO: Need contactMethodDisplayName for the Email and Phone strings
@@ -188,7 +187,11 @@ class ContactsListVC: UITableViewController
         return actions
     }
     
-    // MARK: Utilitiy Functions
+    // MARK: - TODO
+    
+    private func contactFor(indexPath: NSIndexPath) -> Contact {
+        return filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row]
+    }
     
     private func removeContact(index: NSIndexPath)
     {
@@ -241,6 +244,16 @@ class ContactsListVC: UITableViewController
         return nil
     }
     
+    private func sectionContactsOrderPredicate(first: Contact, second: Contact) -> Bool {
+        switch secondarySortOrder
+        {
+        case .FirstName:
+            return first.firstName < second.firstName
+        case .LastName:
+            return first.lastName < second.lastName
+        }
+    }
+    
     private func updateFilteredContacts() {
         // Remove old contatcs
         // TODO: Maybe rename to orderedContacts...
@@ -256,7 +269,7 @@ class ContactsListVC: UITableViewController
                     self.filteredContacts[sectionHeader]!.append(contact)
                 }
                 else { // create a new array
-                    self.filteredContacts[sectionHeader] = [contact]
+                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
                 }
             }
             else {
@@ -308,13 +321,14 @@ class ContactsListVC: UITableViewController
     }
     
     private func loadSortOrderSwitcher() {
-        // TODO: Would be nice to support other orders...
-        // TODO:
+        let sortOrderOptions = ContactsListVC.selectableSortOrders.map(sortOrderDisplayName)
         
-        let segmentedControl: UISegmentedControl = UISegmentedControl(items: ContactsListVC.selectableSortOrders.map(sortOrderDisplayName))
+        // Create segmented control
+        let segmentedControl: UISegmentedControl = UISegmentedControl(items: sortOrderOptions)
         segmentedControl.selectedSegmentIndex = 1
         segmentedControl.addTarget(self, action: "onSortOrderSwitcherChange:", forControlEvents: .ValueChanged)
         
+        // Set as the right item
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: segmentedControl)
     }
     
@@ -336,7 +350,7 @@ class ContactsListVC: UITableViewController
     private func initiateContact(contact: Contact, contactMethod: ContactMethod)
     {
         if !contactMethod.initiateContact() {
-            Alert.displaySimple(self, title: "Error", message: "Couldn't initiate contact with foreign entity \"\(contact.firstName)\" (doesn't work on simulators)")
+            Alert.displaySimple(self, title: "Error", message: "Couldn't initiate contact with foreign entity \"\(contact.firstName)\"")
         }
     }
     
@@ -345,7 +359,7 @@ class ContactsListVC: UITableViewController
         // TODO: Need to implement a better way to find the appropriate email(label=Main), or just present a list
         // Currently sends email to first email found
         // TODO: ? Ensure we have this index...
-        let contact = self.filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
+        let contact = contactFor(index)
         for contactMethod in contact.contactMethods {
             switch contactMethod.info
             {
@@ -361,7 +375,7 @@ class ContactsListVC: UITableViewController
         // TODO: Need to implement a better way to find the appropriate phone(label=main), or just present a list
         // Currently calls the first number found
         // TODO: ? Ensure we have this index...
-        let contact = self.filteredContacts[OrderedDictionaryIndex(index.section)].value[index.row]
+        let contact = self.contactFor(index)
         for contactMethod in contact.contactMethods {
             switch contactMethod.info
             {

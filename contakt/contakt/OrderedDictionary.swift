@@ -16,8 +16,6 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     typealias Element = (key: TKey, value: TValue)
     typealias Predicate = (TKey, TKey) -> Bool
     
-    // MARK: - Class Variables
-    
     // MARK: - Instance Variables
     private var data = [Element]()
     var predicate: Predicate  = { $0 < $1 }
@@ -30,6 +28,7 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     }
     
     // MARK: - Constructors
+    init() {}
     init(predicate: Predicate) {
         self.predicate = predicate
     }
@@ -43,10 +42,12 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
     // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
     // kv-pairs.
-    init(predicate: Predicate, elements: (Key, Value)...) {
-        // TODO: how do you pass the dictionary literal along to the other constructor? Or even can you atm?
+    init(predicate: Predicate, elements: (TKey, TValue)...) {
+        self.init(elements: elements, predicate: predicate)
+    }
+    // TODO: There doesn't seem to be a way right now to set a field before calling to another constructor...
+    init<T: SequenceType where T.Generator.Element == (TKey, TValue)>(elements: T, predicate: Predicate = { $0 < $1 }) {
         self.predicate = predicate
-        
         // The input is likely not ordered, so we must insert one by one...
         // NOTE: if a key is duplicated, we use the last value
         // TODO: Make sure I'm using this style everywhere it's applicable
@@ -168,15 +169,9 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     // MARK: DictionaryLiteralConvertible
     typealias Key = TKey
     typealias Value = TValue
-    /// Create an instance initialized with `elements`.
+    // Construct with a dictionary literal
     init(dictionaryLiteral elements: (Key, Value)...) {
-        // The input is likely not ordered, so we must insert one by one...
-        // NOTE: if a key is duplicated, we use the last value
-        // TODO: Make sure I'm using this style everywhere it's applicable
-        // TODO: Get rid of the duplication...
-        for (key, value) in elements {
-            self[key] = value
-        }
+        self.init(elements: elements)
     }
 }
 
@@ -198,25 +193,6 @@ func == <TKey: Equatable, TValue: Equatable>(lhs: OrderedDictionary<TKey, TValue
     }
     return true
 }
-
-// TODO: Consider whether I should have this..
-//func < <TKey: Comparable, TValue: Comparable>(lhs: OrderedDictionary<TKey, TValue>, rhs: OrderedDictionary<TKey, TValue>) -> Bool {
-//    // If the counts aren't equal
-//    if lhs.count != rhs.count {
-//        return lhs.count < rhs.count
-//    }
-//    // NOTE: Since we're ordered, we can just iterate through and compare the keys and values at the same indices
-//    for index in 0 ..< lhs.count {
-//        // TODO: Implement
-////        let lhsPair = lhs.data[index]
-////        let rhsPair = rhs.data[index]
-////        // If either the key or the value aren't equal, we're not equal
-////        if lhsPair.key != rhsPair.key || lhsPair.value != rhsPair.value {
-////            return false
-////        }
-//    }
-//    return true
-//}
 
 extension OrderedDictionary : CustomStringConvertible, CustomDebugStringConvertible {
     // NOTE: Implementation taken from the standard Dictionary's implementation: https://github.com/apple/swift/blob/master/stdlib/public/core/HashedCollections.swift.gyb#L1272
