@@ -344,6 +344,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     private func appendSearchableContactFieldsOtherInfo(inout contactFieldsToSearch: [String], contact: Contact) {
         contactFieldsToSearch.append(genderDisplayName(contact.gender))
         
+        // TODO: Consider also appending the contact method's label...
         for contactMethod in contact.contactMethods {
             switch contactMethod.info
             {
@@ -357,7 +358,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     private func contactMatchesSearch(contact: Contact, search: String) -> Bool {
-        // NOTE: We split the search string based on spaces so that the user can enter things like 'Ro Cun' to find 'Robert Cunningham'
+        // NOTE: We split the search string on spaces so that the user can enter things like 'Ro Cun' to find 'Robert Cunningham'
         let searchParts = search.split()
         
         var contactFieldsToSearch = [String]()

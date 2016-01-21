@@ -1,6 +1,7 @@
 # contakt
 iOS address book app
 
+[//]: # (TODO: Update screenshot, also probably also want an iPad screenshot)
 ![Screenshot][screenshot]
 
 ## Summary
@@ -13,6 +14,9 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Swipe on a contact to email/phone
 	* Go to the email/phone app when pressed
 	* Doesn't display the button if the contact doesn't have any of the specific type (email or phone) (first 2 in sample data are examples of this)
+* Search bar which filters the list of contacts
+	* Can search through all of a contacts fields, only their names or only their other fields
+	* Split the search string on spaces and check for each part so that the user can enter things like 'cl su' to find 'Clayton Sutton'
 * Display the contacts with their full name and middle initial in the list
 	* as well as their optional nickname
 * Display their associated photo (or the default if they don't have one...)
@@ -24,18 +28,22 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Partially implemented section index titles (the sort of scroll bar with letters) which could be improved to display all letters no matter what's actually in the list, (I personally like it this way but, it makes more sense to keep it consistent with other iOS apps)
 
 ### TODO
-* Store the contacts in either core data or sqlite (currently just have a static list of contacts) (1-2 days)
-* Search (filter list) (1-2 hours)
-* Create/Update/Delete contacts (6-8 days, though 3-4 for basic functionality)
-* Load contacts from facebook, google, etc (2 days each)
-* ? Save to a vCard(.vcf) file (2 hours)
-* Custom url to import contacts from other apps (4-5 hours)
+* Various UI improvements (1-2 hours)
+* App icon (2-5 hours)
 * Actual addresses (30 minutes)
-* Contact details vc should display bottom list of details in a more reasonable way (and maybe use long press on a field to allow editing of that field) (2-3 days)
-* Contact details vc tapping on one of the contact methods should initiate contact (ie. make phone call to the given number) (1-2 hours)
+* Store the contacts in either core data or sqlite (currently just have a static list of contacts) (1-2 days)
+* Create/Update/Delete contacts (6-8 days, though 3-4 for basic functionality)
+* Contact details vc should display bottom list of details in a more reasonable way (2-3 days)
+	* Long press on a field to allow editing of that field) (1 hour)
+	* Tapping on one of the contact methods should initiate contact (ie. make phone call to the given number) (1 hour)
 * Unit testing, I did a small amount of unit testing while figuring out and UIColor(hex:) UIColor(hexAlpha:) but overall testing is lacking (5-6 days)
-* ? Styling the last name differently (ie. bolding) in the list (30 minutes)
 
+#### Maybe
+* Styling the last name differently (ie. bolding) in the list (30 minutes)
+* LaunchScreen (2 hours)
+* Save to a vCard(.vcf) file (2 hours)
+* Custom url to import contacts from other apps (4-5 hours)
+* Load contacts from facebook, google, etc (2 days each)
 
 [//]: # (Resource References)
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
