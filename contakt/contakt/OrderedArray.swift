@@ -14,7 +14,7 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
 {
     // MARK: - Types
     typealias Element = T
-    typealias Predicate = (T, T) -> Bool
+    typealias Predicate = (Element, Element) -> Bool
     
     // MARK: - Instance Variables
     private var data = [Element]()
@@ -36,10 +36,10 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
     // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
     // kv-pairs.
-    init(predicate: Predicate, elements: T...) {
+    init(predicate: Predicate, elements: Element...) {
         self.init(elements: elements, predicate: predicate)
     }
-    init<U: SequenceType where U.Generator.Element == T>(elements: U, predicate: Predicate) {
+    init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate) {
         self.predicate = predicate
         // The input is likely not ordered, so we must insert one by one...
         // NOTE: if a key is duplicated, we use the last value
@@ -50,11 +50,11 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     
     // MARK: - Methods
     @warn_unused_result
-    func binarySearch(forValue value: T) -> Index {
+    func binarySearch(forValue value: Element) -> Index {
         return self.data.binarySearch { self.predicate($0, value) }
     }
     // TODO: Consider making this public
-    private func indexMatches(index: Index, value: T) -> Bool {
+    private func indexMatches(index: Index, value: Element) -> Bool {
         return index < self.data.count && self.data[index] == value
     }
     
@@ -197,7 +197,8 @@ extension OrderedArrayEquatable : CustomStringConvertible, CustomDebugStringConv
 struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeReplaceableCollectionType, ArrayLiteralConvertible, Equatable
 {
     // MARK: - Types
-    typealias Predicate = (T, T) -> Bool
+    typealias Element = T
+    typealias Predicate = (Element, Element) -> Bool
     
     // MARK: - Instance Variables
     private var data = [Element]()
@@ -223,10 +224,10 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
     // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
     // kv-pairs.
-    init(predicate: Predicate, elements: T...) {
+    init(predicate: Predicate, elements: Element...) {
         self.init(elements: elements, predicate: predicate)
     }
-    init<U: SequenceType where U.Generator.Element == T>(elements: U, predicate: Predicate = { $0 < $1 }) {
+    init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate = { $0 < $1 }) {
         self.predicate = predicate
         // The input is likely not ordered, so we must insert one by one...
         // NOTE: if a key is duplicated, we use the last value
@@ -237,11 +238,11 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     
     // MARK: - Methods
     @warn_unused_result
-    func binarySearch(forValue value: T) -> Index {
+    func binarySearch(forValue value: Element) -> Index {
         return self.data.binarySearch { self.predicate($0, value) }
     }
     // TODO: Consider making this public
-    private func indexMatches(index: Index, value: T) -> Bool {
+    private func indexMatches(index: Index, value: Element) -> Bool {
         return index < self.data.count && self.data[index] == value
     }
     
@@ -340,7 +341,6 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     }
     
     // MARK: ArrayLiteralConvertible
-    typealias Element = T
     init(arrayLiteral elements: Element...) {
         self.init(elements: elements)
     }
