@@ -42,6 +42,8 @@
 		3DB6FD681C4F450700197D3B /* OrderedDictionaryIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */; };
 		3DB6FD6A1C501C7800197D3B /* OrderedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6FD691C501C7800197D3B /* OrderedArray.swift */; };
 		3DB6FD6B1C501C7800197D3B /* OrderedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6FD691C501C7800197D3B /* OrderedArray.swift */; };
+		3DC42FB11C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
+		3DC42FB21C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +92,7 @@
 		3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryIndex.swift; sourceTree = "<group>"; };
 		3DB6FD691C501C7800197D3B /* OrderedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedArray.swift; sourceTree = "<group>"; };
+		3DC42FB01C5147BF00432573 /* String+split.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+split.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +222,7 @@
 				3D3B37D91C4E01B1002F3091 /* UIColor+hex.swift */,
 				3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */,
 				3D5893041C4F0A8400C11EDB /* CollectionType+binarySearch.swift */,
+				3DC42FB01C5147BF00432573 /* String+split.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -363,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D5893051C4F0A8400C11EDB /* CollectionType+binarySearch.swift in Sources */,
+				3DC42FB11C5147BF00432573 /* String+split.swift in Sources */,
 				3DB6FD6A1C501C7800197D3B /* OrderedArray.swift in Sources */,
 				3D3B37C41C4D8E62002F3091 /* Contact.swift in Sources */,
 				3D3B37D61C4DE7F5002F3091 /* Dispatch.swift in Sources */,
@@ -396,6 +401,7 @@
 				3D3B37D71C4DE7F5002F3091 /* Dispatch.swift in Sources */,
 				3D3B37E71C4E81D5002F3091 /* ContactLoader.swift in Sources */,
 				3D3B37EA1C4E87EF002F3091 /* Visuals.swift in Sources */,
+				3DC42FB21C5147BF00432573 /* String+split.swift in Sources */,
 				3D3B37E01C4E031A002F3091 /* UIColor+hex-Tests.swift in Sources */,
 				3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */,
 				3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */,

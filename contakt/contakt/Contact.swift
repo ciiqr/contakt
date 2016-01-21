@@ -46,21 +46,20 @@ class Contact : Equatable
         let formattedMiddle = self.middleName.characters.count > 0 ? self.middleName + " " : ""
         return "\(self.firstName) \(formattedMiddle)\(self.lastName)"
     }
+    // NOTE: Luckily in swift Character represents a single 'human-readable' character, we don't need to worry about
+    // unicode, on the down side, swift doesn't have a 'uppercase' methods for characters and so it's most convenient
+    // for us to represent these first characters as String's
     var firstNameFirstCharacter: String? {
-        get {
-            if let character = firstName.characters.first {
-                return String(character)
-            }
-            return nil
+        if let character = firstName.characters.first {
+            return String(character)
         }
+        return nil
     }
     var lastNameFirstCharacter: String? {
-        get {
-            if let character = lastName.characters.first {
-                return String(character)
-            }
-            return nil
+        if let character = lastName.characters.first {
+            return String(character)
         }
+        return nil
     }
     
     // MARK: Constructors

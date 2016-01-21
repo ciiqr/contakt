@@ -8,25 +8,36 @@
 
 import UIKit
 
+// TODO: Probably move to it's own file...
 enum ContactsSortOrder {
     case LastName
     case FirstName
     // TODO: Other sort orders?
 }
 
-class ContactsListVC: UITableViewController
+enum ContactSearchScope {
+    case All
+    case Names
+    case OtherInfo
+    // TODO: Maybe more ;)
+}
+
+class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate
 {
+    // MARK: Class Properties
+    static let showContactDetailsSequeIdentifier = "showDetail"
+    static let selectableSortOrders: [ContactsSortOrder] = [.FirstName, .LastName]
+    static let selectableSearchScopes: [ContactSearchScope] = [.All, .Names, .OtherInfo]
+    
     // MARK: Instance Variables
     var detailViewController: ContactDetailsVC? = nil
+    var searchController: UISearchController? = nil
     
     // This is an unsorted list of contacts
     var contactsList = [Contact]()
     // This is a sorted dictionary mapping section headers to lists of contacts
-    // TODO: Will want to sort the [Contact] arrays based on the secondary sort order...
-    // TODO: Change the array below to be an OrderedArray that sorts based on sortOrderKey(secondarySortOrder, forContact: contact)
     var filteredContacts = OrderedDictionary<String, OrderedArrayEquatable<Contact>>()
     
-    static let selectableSortOrders: [ContactsSortOrder] = [.FirstName, .LastName]
     var primarySortOrder = ContactsSortOrder.LastName {
         didSet {
             // Only re-sort if the sort order has changed
@@ -35,9 +46,6 @@ class ContactsListVC: UITableViewController
             }
             // re-order contatcs based on new sort order...
             updateFilteredContacts()
-            
-            // Update ui
-            tableView.reloadData()
         }
     }
     var secondarySortOrder: ContactsSortOrder {
@@ -47,6 +55,17 @@ class ContactsListVC: UITableViewController
             return .LastName;
         case .LastName:
             return .FirstName;
+        }
+    }
+    
+    var searchScope = ContactSearchScope.All {
+        didSet {
+            // Only re-sort if the search scope has changed
+            if searchScope == oldValue {
+                return
+            }
+            // re-order contatcs based on new search scope...
+            updateFilteredContacts()
         }
     }
     
@@ -63,6 +82,7 @@ class ContactsListVC: UITableViewController
         // Add additional views
         loadSortOrderSwitcher()
         loadAddNewContactButton()
+        loadSearchController()
         
         // If we have a splitViewController, use it to retrieve the detailsViewController
         if let split = self.splitViewController {
@@ -83,19 +103,29 @@ class ContactsListVC: UITableViewController
     // MARK: Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showDetail" {
+        if segue.identifier == ContactsListVC.showContactDetailsSequeIdentifier {
+            var contact: Contact?
+            // If a row is selected, use the contact from that index
             if let index = self.tableView.indexPathForSelectedRow {
-                // TODO: Remove use of force unwrapping
-                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ContactDetailsVC
-                // TODO: Ensure we actuallt have these indexes...?
-                controller.contact = contactFor(index)
+                contact = contactFor(index)
+            }
+            // If the sender is an instance of Contact, use that
+            else if sender is Contact {
+                contact = sender as? Contact
+            }
+            
+            // If we have a Contact instance, and the destination is a ContactDetailsVC instance as we expect, pass the contact along
+            if let contact = contact, controller = (segue.destinationViewController as! UINavigationController).topViewController as? ContactDetailsVC {
+                controller.contact = contact
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
     
+    // MARK: Protocols
     // MARK: Table View
+    // TODO: Split this up into the tableviews delegate and data source...
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return filteredContacts.count
@@ -106,13 +136,22 @@ class ContactsListVC: UITableViewController
         return self.filteredContacts[OrderedDictionaryIndex(section)].key
     }
     
-    // TODO: Change this so it lists all letters, #, and then a final one for other characters...
+    // TODO: Consider changing to list all letters... (except that then that would need to be localized...)
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-        return [String](self.filteredContacts.keys)
+        var titles = [UITableViewIndexSearch]
+        titles.appendContentsOf(self.filteredContacts.keys)
+        return titles
     }
     
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return index;
+        // If the index is 0, we go to the search bar
+        if index == 0 {
+            let searchBarFrame = self.searchController!.searchBar.frame
+            self.tableView.scrollRectToVisible(searchBarFrame, animated: false)
+            return NSNotFound;
+        }
+        // Account for the search bar which isn't a section but is in the section index titles
+        return index - 1;
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -187,7 +226,38 @@ class ContactsListVC: UITableViewController
         return actions
     }
     
-    // MARK: - TODO
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        // NOTE: this could potentially be made more efficient by checking if the new search text is simply the old text with something new appended...
+        //       this would allow us to filter based on the currently filtered list.
+        
+        // filter contatcs based on new search text...
+        updateFilteredContacts()
+    }
+    
+    // MARK: UISearchBarDelegate
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope >= ContactsListVC.selectableSearchScopes.count {
+            // TODO: Handle error index...
+        }
+        
+        // Update search scope
+        self.searchScope = ContactsListVC.selectableSearchScopes[selectedScope]
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        // If they press search when theres only one result, go to the contacts details vc for that contact...
+        if self.filteredContacts.count == 1 && self.filteredContacts[OrderedDictionaryIndex(0)].value.count == 1
+        {
+            // TODO: I'm not 100% convinced by this design but it required the least amount of work...
+            // Get the contact
+            let contact = self.contactFor(NSIndexPath.init(forItem: 0, inSection: 0))
+            // Go to the detail page for the contact
+            performSegueWithIdentifier(ContactsListVC.showContactDetailsSequeIdentifier, sender: contact)
+        }
+    }
+    
+    // MARK: - Methods
     
     private func contactFor(indexPath: NSIndexPath) -> Contact {
         return filteredContacts[OrderedDictionaryIndex(indexPath.section)].value[indexPath.row]
@@ -254,28 +324,98 @@ class ContactsListVC: UITableViewController
         }
     }
     
+    // TODO: Should be a stand alone function...
+    private func insensitiveContains(stringToSearch: String, _ stringToFind: String) -> Bool {
+        return stringToSearch.lowercaseString.containsString(stringToFind.lowercaseString)
+    }
+    
+    private func appendSearchableContactFieldsAll(inout contactFieldsToSearch: [String], contact: Contact) {
+        appendSearchableContactFieldsNames(&contactFieldsToSearch, contact: contact)
+        appendSearchableContactFieldsOtherInfo(&contactFieldsToSearch, contact: contact)
+    }
+    
+    private func appendSearchableContactFieldsNames(inout contactFieldsToSearch: [String], contact: Contact) {
+        contactFieldsToSearch.appendContentsOf([contact.firstName, contact.lastName, contact.middleName])
+        if let nickName = contact.nickName {
+            contactFieldsToSearch.append(nickName)
+        }
+    }
+    
+    private func appendSearchableContactFieldsOtherInfo(inout contactFieldsToSearch: [String], contact: Contact) {
+        contactFieldsToSearch.append(genderDisplayName(contact.gender))
+        
+        for contactMethod in contact.contactMethods {
+            switch contactMethod.info
+            {
+            case .Email(let addr):
+                contactFieldsToSearch.append(addr)
+            case .Phone(let number):
+                contactFieldsToSearch.append(number)
+            }
+        }
+        // TODO: Have to add new fields as they are added to contact... if only there was a reasonable way to ensure that would happen and not be forgotten...
+    }
+    
+    private func contactMatchesSearch(contact: Contact, search: String) -> Bool {
+        // NOTE: We split the search string based on spaces so that the user can enter things like 'Ro Cun' to find 'Robert Cunningham'
+        let searchParts = search.split()
+        
+        var contactFieldsToSearch = [String]()
+        // Based on the search contect, append different fields to be searched
+        switch searchScope
+        {
+        case .All:
+            self.appendSearchableContactFieldsAll(&contactFieldsToSearch, contact: contact)
+            break;
+        case .Names:
+            self.appendSearchableContactFieldsNames(&contactFieldsToSearch, contact: contact)
+            break;
+        case .OtherInfo:
+            self.appendSearchableContactFieldsOtherInfo(&contactFieldsToSearch, contact: contact)
+            break;
+        }
+        
+        // Go through the parts and at least one of the fields in the contact must match the given part
+        for part in searchParts {
+            // If none of the fields contain this part of the search, this contact doesn't match the search
+            if !contactFieldsToSearch.any({ self.insensitiveContains($0, part) }) {
+                return false
+            }
+        }
+        return true
+    }
+    
     private func updateFilteredContacts() {
+        let searchString = self.searchController?.searchBar.text
+        
         // Remove old contatcs
         // TODO: Maybe rename to orderedContacts...
         self.filteredContacts.removeAll(keepCapacity: true)
         
         // Add all new contacts...
         for contact in self.contactsList {
-            // TODO: move some of this to a separate method with a parameter for whether to update the ui...
+            // Get the section to store the contact in
             if let sectionHeader = self.contactSection(contact) {
-                // Either
-                if let _ = self.filteredContacts[sectionHeader] {
-                    // append to existing array
-                    self.filteredContacts[sectionHeader]!.append(contact)
-                }
-                else { // create a new array
-                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
+                
+                // Ensure either, the contact matches the current search OR the there is no searchController/text
+                if searchString == nil || contactMatchesSearch(contact, search: searchString!) {
+                    // Either
+                    if let _ = self.filteredContacts[sectionHeader] {
+                        // append to existing array
+                        self.filteredContacts[sectionHeader]!.append(contact)
+                    }
+                    else { // create a new array
+                        self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
+                    }
                 }
             }
             else {
                 // TODO: Handle improper contact without section
             }
         }
+        
+        // Update ui
+        tableView.reloadData()
     }
     
     private func loadContacts() {
@@ -325,7 +465,7 @@ class ContactsListVC: UITableViewController
         
         // Create segmented control
         let segmentedControl: UISegmentedControl = UISegmentedControl(items: sortOrderOptions)
-        segmentedControl.selectedSegmentIndex = 1
+        segmentedControl.selectedSegmentIndex = ContactsListVC.selectableSortOrders.indexOf(primarySortOrder) ?? 0
         segmentedControl.addTarget(self, action: "onSortOrderSwitcherChange:", forControlEvents: .ValueChanged)
         
         // Set as the right item
@@ -336,14 +476,67 @@ class ContactsListVC: UITableViewController
         // TODO: Implement add new Contact
     }
     
+    private func loadSearchController() {
+        let searchScopes = ContactsListVC.selectableSearchScopes.map(self.searchScopeDisplayName)
+        let controller = UISearchController(searchResultsController: nil)
+        
+        // Setup the search controller
+        controller.searchResultsUpdater = self
+        controller.dimsBackgroundDuringPresentation = false
+        controller.searchBar.scopeButtonTitles = searchScopes
+        controller.searchBar.selectedScopeButtonIndex = ContactsListVC.selectableSearchScopes.indexOf(self.searchScope) ?? 0
+        controller.searchBar.delegate = self
+        controller.searchBar.sizeToFit() // Fix for search bar sizing issues
+        
+        // Store controller
+        self.searchController = controller
+        // Add to the table view
+        self.tableView.tableHeaderView = controller.searchBar
+        
+        // Search bar hidden by default
+        self.tableView.contentOffset = CGPointMake(0, controller.searchBar.frame.size.height)
+        
+        // NOTE: This is necessary because otherwise when we select a contact, the search bar will still be visible...
+        self.definesPresentationContext = true
+    }
+    
+    // TODO: These should be moved elsewhere...
     private func sortOrderDisplayName(order: ContactsSortOrder) -> String {
-        // TODO: Localized...
+        // TODO: Localize
         switch order
         {
         case .FirstName:
             return "First"
         case .LastName:
             return "Last"
+        }
+    }
+    
+    private func searchScopeDisplayName(scope: ContactSearchScope) -> String {
+        // TODO: Localize
+        switch scope
+        {
+        case .All:
+            return "All"
+        case .Names:
+            return "Names"
+        case .OtherInfo:
+            return "Other Info"
+        }
+    }
+    
+    private func genderDisplayName(gender: Gender) -> String {
+        // TODO: Localize
+        switch gender
+        {
+        case .Female:
+            return "Female"
+        case .Male:
+            return "Male"
+        case .NonBinary:
+            return "Non-Binary"
+        case .None:
+            return "None"
         }
     }
     

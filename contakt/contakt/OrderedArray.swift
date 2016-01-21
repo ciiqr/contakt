@@ -87,7 +87,6 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
             return self.data[bounds]
         }
         set(values) {
-            // TODO: Ensure this is infact what it's supposed to be doing, because this is poorly documented
             replaceRange(bounds, with: values)
         }
     }
@@ -275,7 +274,6 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
             return self.data[bounds]
         }
         set(values) {
-            // TODO: Ensure this is infact what it's supposed to be doing, because this is poorly documented
             replaceRange(bounds, with: values)
         }
     }
