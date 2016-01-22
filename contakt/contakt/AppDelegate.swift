@@ -62,11 +62,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     // MARK: - Split view
+    var firstTime = true
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? ContactDetailsVC else { return false }
         if topAsDetailController.contact == nil {
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+            return true
+        }
+        // This prevents us from starting up in the contact details vc with the first contact
+        // TODO: This still could be improved though (ie. when on the master vc and you rotate twice, it switches to the details vc, which could be prevented by keeping track of when the user selects a contact and when they return back from that contacts details page)
+        if firstTime {
+            firstTime = false
             return true
         }
         return false

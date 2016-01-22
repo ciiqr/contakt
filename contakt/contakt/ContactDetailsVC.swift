@@ -80,7 +80,9 @@ class ContactDetailsVC: UIViewController
         }
         else // No contact
         {
-            // TODO: Need to make this look better, and only ever display when there are absolutely 0 contacts...
+            photoImageView.image = nil
+            nameLabel.text = nil
+            // TODO: Need to improve how this looks (Probably just have a separate label)
             detailsLabel.text = "No contact selected!"
         }
     }

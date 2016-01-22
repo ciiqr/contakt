@@ -13,7 +13,6 @@ func ==(lhs: OrderedDictionaryIndex, rhs: OrderedDictionaryIndex) -> Bool
     return lhs.index == rhs.index
 }
 
-// TODO: Change this to be used for both OrderedDictionary and OrderedArray...
 // NOTE: This is a utility class for OrderedDictionary, this is necessary because if we used Int directly as the Index
 // type then we wouldn't be able to have a subscript overload for returning the TValue
 struct OrderedDictionaryIndex : ForwardIndexType, RandomAccessIndexType {

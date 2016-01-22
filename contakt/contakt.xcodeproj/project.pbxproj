@@ -120,6 +120,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D29835C1C51AB9F00EEC9AE /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */,
+				3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */,
+				3DB6FD691C501C7800197D3B /* OrderedArray.swift */,
+			);
+			name = "Data Structures";
+			sourceTree = "<group>";
+		};
 		3D3B37861C4D8D29002F3091 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +155,7 @@
 			children = (
 				3D3B37A01C4D8D29002F3091 /* Info.plist */,
 				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
+				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
 				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
 				3D3B37D11C4DA6B0002F3091 /* Utilities */,
 				3D3B37C21C4D8E13002F3091 /* Model */,
@@ -205,13 +216,10 @@
 		3D3B37D11C4DA6B0002F3091 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				3D29835C1C51AB9F00EEC9AE /* Data Structures */,
 				3D3B37D81C4E0199002F3091 /* Extensions */,
 				3D3B37D51C4DE7F5002F3091 /* Dispatch.swift */,
 				3D3B37E11C4E758C002F3091 /* Alert.swift */,
-				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
-				3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */,
-				3DB6FD691C501C7800197D3B /* OrderedArray.swift */,
-				3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

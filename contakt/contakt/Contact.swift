@@ -31,7 +31,7 @@ class Contact : Equatable
     // Contact Info
     var contactMethods: [ContactMethod]
     
-    // TODO: Have other info...
+    // TODO: Have other info... (will need to added to the appropriate searchable fields)
     // - Have dates (Birth day, Aniversary, etc) generic like ContactMethod's
     // - Title (Mr, Ms, etc)
     

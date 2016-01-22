@@ -20,6 +20,7 @@ enum ContactSearchScope {
     case Names
     case OtherInfo
     // TODO: Maybe more ;)
+    // TODO: Infact maybe: All, Names, Contact, Other
 }
 
 class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate
@@ -505,8 +506,17 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     private func preselectContactIfNeedBe() {
-        // We have contacts
+        // DetailsVC already has a contact
+        if let detailsContact = self.detailViewController?.contact {
+            // DetailsVC's contact isn't in our current filter
+            if !filteredContacts.any({ $1.contains(detailsContact) }) {
+                self.detailViewController?.contact = nil
+            }
+        }
+        
+        // DetailsVC doesn't have a contact but there are items in our filter
         if self.detailViewController?.contact == nil && filteredContacts.count > 0 && filteredContacts[OrderedDictionaryIndex(0)].value.count > 0 {
+            // Set DetailsVC's contact to the first in our filtered list
             self.detailViewController?.contact = filteredContacts[OrderedDictionaryIndex(0)].value[0]
             // TODO: The only problem with this is that the selected row is not highlighted, and I can't use tableView.selectRowAtIndexPath because that will navigate when I don't want it to... So I suppose setting highlighted on the cell's
         }

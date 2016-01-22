@@ -10,6 +10,10 @@ import Foundation
 
 class ContactLoader {
     
+    // TODO: Will likely end up being called DataSource OR idk, some thing generic... If we're going to sync with online services then
+    //       we need a class to represent a signed in user's contacts on that service... ContactService? where we have the default local,
+    //       the iOS address book(which, maybe is the same as the local? unless they don't give the app proper permissions that is),
+    //       Google, Facebook, etc.)
     // TODO: Should load this from some data store(core data, sqlite, etc.) instead... This was just quick to do with sublime-text
     //      I could have loaded it from json directly but NSJSONSerialization.JSONObjectWithData leads to quite messy code in swift and I wanted to avoid external libraries initially
     static func loadContacts(handler: ([Contact]) -> Void)
