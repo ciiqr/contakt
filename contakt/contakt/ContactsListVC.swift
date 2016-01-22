@@ -289,9 +289,6 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         let dictionaryKey = filteredContacts[OrderedDictionaryIndex(index.section)].key
         let arrayIndex = index.row
         
-        // NOTE: Because arrays are value types, we need to make a new one and then re-assign, hopefully the compiler will recognize this and optimize...
-        // TODO: Test the performance of this...
-        
         // Get the contact array
         var potentialSectionContacts = filteredContacts[dictionaryKey]
         // TODO: if the above is nil, something went wrong...
@@ -460,7 +457,6 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     private func loadNavbarIcon() {
         // TODO: Maybe make the icon a bit bigger...
-        // TODO: Maybe also display the title in our custom view so we can shift it over a bit
         // Icon
         let imageView = UIImageView(image: Visuals.navBarIcon)
         let iconItem = UIBarButtonItem(customView: imageView)

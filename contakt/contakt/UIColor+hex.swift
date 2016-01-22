@@ -10,8 +10,6 @@ import UIKit
 
 extension UIColor
 {
-    // TODO: Test these
-    
     // For creating UIColor instances with hex numbers. ie:
     // UIColor(hex: 0xFF00FF)
     // UIColor(hexAlpha: 0x00000088)
