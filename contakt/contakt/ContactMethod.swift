@@ -30,39 +30,36 @@ enum ContactMethodInfo : CustomStringConvertible
 
 class ContactMethod
 {
-    // MARK: Instance Variables
+    // MARK: - Properties
     
-    // NOTE: some user supplied name for this contact method record (ie. home, work, mobile, main, etc)
+    // MARK: Instance
+    // NOTE: A user supplied name for this contact method record (ie. home, work, mobile, main, etc)
     var label: String
     var info: ContactMethodInfo
     
-    // MARK: Properties
+    // MARK: Calculated
+    // TODO: There must be a better way than these... is does keep things short elsewhere for now though
     var isEmail: Bool {
-        get {
-            if case .Email = self.info {
-                return true
-            }
-            return false
+        if case .Email = self.info {
+            return true
         }
+        return false
     }
     var isPhone: Bool {
-        get {
-            if case .Phone = self.info {
-                return true
-            }
-            return false
+        if case .Phone = self.info {
+            return true
         }
+        return false
     }
-    // TODO: There must be a better way than the above... is does keep things short elsewhere though
     
-    // MARK: Constructors
+    // MARK: - Constructors
     init(_ info: ContactMethodInfo, label: String = "") {
         self.info = info
         self.label = label
     }
 
-    // MARK: Methods
-    // MARK: initiate contact
+    // MARK: - Methods
+    // MARK: Initiate contact
     func initiateContact() -> Bool {
         switch info
         {
@@ -73,6 +70,7 @@ class ContactMethod
         }
     }
     
+    // TODO: This code may very well be moved elsewhere, it's mostly dependent on the complexity of future contact methods...
     private func initiatePhoneCall(number: String) -> Bool
     {
         // TODO: Consider telprompt, which is unofficial but arguably a better experience for the user (it prompts before making the call)...

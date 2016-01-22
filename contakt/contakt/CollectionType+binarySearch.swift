@@ -26,7 +26,8 @@ extension CollectionType where Index: RandomAccessIndexType
                 // low = mid + 1
                 low = mid.advancedBy(1)
             }
-            else { // it's in the lower half
+            else // it's in the lower half
+            {
                 high = mid
             }
         }

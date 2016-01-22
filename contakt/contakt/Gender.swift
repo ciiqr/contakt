@@ -8,16 +8,10 @@
 
 import Foundation
 
-enum Gender : String, CustomStringConvertible
+enum Gender
 {
     case None
     case Male
     case Female
     case NonBinary
-    
-    var description: String {
-        get {
-            return self.rawValue
-        }
-    }
 }

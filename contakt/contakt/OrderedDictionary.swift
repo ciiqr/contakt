@@ -16,7 +16,8 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     typealias Element = (key: TKey, value: TValue)
     typealias Predicate = (TKey, TKey) -> Bool
     
-    // MARK: - Instance Variables
+    // MARK: - Properties
+    // MARK: Instance
     private var data = [Element]()
     var predicate: Predicate  = { $0 < $1 }
     {
@@ -84,11 +85,13 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
                 if self.indexMatches(index, key: key) {
                     data[index].value = value
                 }
-                else { // else, insert at the given index
+                else // else, insert at the given index
+                {
                     data.insert((key, value), atIndex: index)
                 }
             }
-            else { // Setting to null removes
+            else // Setting to null removes
+            {
                 data.removeAtIndex(index)
             }
         }

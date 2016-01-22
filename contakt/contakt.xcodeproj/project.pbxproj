@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D29835E1C528F6300EEC9AE /* Contact+fullName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */; };
+		3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */; };
+		3D2983611C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */; };
+		3D2983621C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */; };
+		3D2983641C52985600EEC9AE /* String+insensitiveContains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983631C52985600EEC9AE /* String+insensitiveContains.swift */; };
+		3D2983651C52985600EEC9AE /* String+insensitiveContains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983631C52985600EEC9AE /* String+insensitiveContains.swift */; };
+		3D2983671C529A2B00EEC9AE /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983661C529A2B00EEC9AE /* Localized.swift */; };
+		3D2983681C529A2B00EEC9AE /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983661C529A2B00EEC9AE /* Localized.swift */; };
+		3D29836A1C52D67200EEC9AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983691C52D67200EEC9AE /* Constants.swift */; };
+		3D29836B1C52D67200EEC9AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983691C52D67200EEC9AE /* Constants.swift */; };
 		3D3B37931C4D8D29002F3091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37921C4D8D29002F3091 /* AppDelegate.swift */; };
 		3D3B37951C4D8D29002F3091 /* ContactsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37941C4D8D29002F3091 /* ContactsListVC.swift */; };
 		3D3B37971C4D8D29002F3091 /* ContactDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37961C4D8D29002F3091 /* ContactDetailsVC.swift */; };
@@ -64,6 +74,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+fullName.swift"; sourceTree = "<group>"; };
+		3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+photoOrDefault.swift"; sourceTree = "<group>"; };
+		3D2983631C52985600EEC9AE /* String+insensitiveContains.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+insensitiveContains.swift"; sourceTree = "<group>"; };
+		3D2983661C529A2B00EEC9AE /* Localized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
+		3D2983691C52D67200EEC9AE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D3B378F1C4D8D29002F3091 /* contakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = contakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3B37921C4D8D29002F3091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D3B37941C4D8D29002F3091 /* ContactsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListVC.swift; sourceTree = "<group>"; };
@@ -156,11 +171,13 @@
 				3D3B37A01C4D8D29002F3091 /* Info.plist */,
 				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
 				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
+				3D2983661C529A2B00EEC9AE /* Localized.swift */,
 				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
 				3D3B37D11C4DA6B0002F3091 /* Utilities */,
 				3D3B37C21C4D8E13002F3091 /* Model */,
 				3D3B37CF1C4DA627002F3091 /* View Controllers */,
 				3D3B37D01C4DA657002F3091 /* Storyboards */,
+				3D2983691C52D67200EEC9AE /* Constants.swift */,
 			);
 			path = contakt;
 			sourceTree = "<group>";
@@ -231,6 +248,9 @@
 				3D3B37DC1C4E01F7002F3091 /* CollectionType+any.swift */,
 				3D5893041C4F0A8400C11EDB /* CollectionType+binarySearch.swift */,
 				3DC42FB01C5147BF00432573 /* String+split.swift */,
+				3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */,
+				3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */,
+				3D2983631C52985600EEC9AE /* String+insensitiveContains.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -375,21 +395,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D5893051C4F0A8400C11EDB /* CollectionType+binarySearch.swift in Sources */,
+				3D29836A1C52D67200EEC9AE /* Constants.swift in Sources */,
 				3DC42FB11C5147BF00432573 /* String+split.swift in Sources */,
+				3D2983641C52985600EEC9AE /* String+insensitiveContains.swift in Sources */,
 				3DB6FD6A1C501C7800197D3B /* OrderedArray.swift in Sources */,
 				3D3B37C41C4D8E62002F3091 /* Contact.swift in Sources */,
 				3D3B37D61C4DE7F5002F3091 /* Dispatch.swift in Sources */,
 				3D3B37C71C4D8F18002F3091 /* Gender.swift in Sources */,
 				3D3B37971C4D8D29002F3091 /* ContactDetailsVC.swift in Sources */,
+				3D2983611C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */,
 				3D3B37951C4D8D29002F3091 /* ContactsListVC.swift in Sources */,
 				3D3B37931C4D8D29002F3091 /* AppDelegate.swift in Sources */,
 				3D3B37DA1C4E01B1002F3091 /* UIColor+hex.swift in Sources */,
+				3D29835E1C528F6300EEC9AE /* Contact+fullName.swift in Sources */,
 				3D3B37CD1C4D9245002F3091 /* ContactMethod.swift in Sources */,
 				3DB6FD671C4F450700197D3B /* OrderedDictionaryIndex.swift in Sources */,
 				3D3B37E21C4E758C002F3091 /* Alert.swift in Sources */,
 				3D3B37DD1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,
 				3D3B37E61C4E81D5002F3091 /* ContactLoader.swift in Sources */,
 				3D3B37E91C4E87EF002F3091 /* Visuals.swift in Sources */,
+				3D2983671C529A2B00EEC9AE /* Localized.swift in Sources */,
 				3D5893081C4F15C100C11EDB /* OrderedDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,14 +428,19 @@
 				3D3B37C81C4D8F18002F3091 /* Gender.swift in Sources */,
 				3D5893091C4F15C100C11EDB /* OrderedDictionary.swift in Sources */,
 				3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */,
+				3D2983681C529A2B00EEC9AE /* Localized.swift in Sources */,
 				3D3B37DE1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,
 				3D5893061C4F0A8400C11EDB /* CollectionType+binarySearch.swift in Sources */,
 				3DB6FD6B1C501C7800197D3B /* OrderedArray.swift in Sources */,
 				3D3B37D71C4DE7F5002F3091 /* Dispatch.swift in Sources */,
 				3D3B37E71C4E81D5002F3091 /* ContactLoader.swift in Sources */,
+				3D29836B1C52D67200EEC9AE /* Constants.swift in Sources */,
 				3D3B37EA1C4E87EF002F3091 /* Visuals.swift in Sources */,
 				3DC42FB21C5147BF00432573 /* String+split.swift in Sources */,
+				3D2983651C52985600EEC9AE /* String+insensitiveContains.swift in Sources */,
+				3D2983621C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */,
 				3D3B37E01C4E031A002F3091 /* UIColor+hex-Tests.swift in Sources */,
+				3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */,
 				3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */,
 				3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */,
 				3D3B37CE1C4D9245002F3091 /* ContactMethod.swift in Sources */,

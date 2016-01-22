@@ -10,20 +10,22 @@ import UIKit
 
 class ContactDetailsVC: UIViewController
 {
-    // MARK: Instance Variables
-    // MARK Outlets
-    @IBOutlet weak var detailsLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var photoImageView: UIImageView!
-
-    // MARK: Properties
+    // MARK: - Properties
+    
+    // MARK: Instance
     var contact: Contact? {
         didSet {
             // Update the view.
             self.configureView()
         }
     }
+    
+    // MARK: Outlets
+    @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
 
+    // MARK: - Methods
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,7 @@ class ContactDetailsVC: UIViewController
         self.configureView()
     }
     
-    // MARK: Methods
+    // MARK: Other
     func configureView() {
         // Ensure we have the views we expect
         guard let photoImageView = self.photoImageView, nameLabel = self.nameLabel, detailsLabel = self.detailsLabel
@@ -48,19 +50,14 @@ class ContactDetailsVC: UIViewController
         // Update the user interface for the detail item.
         if let contact = self.contact {
             
-            // TODO: Add More information...
+            // TODO: Add More information... and actually display all this in a reasonable way
             
-            if let photo = contact.photo {
-                photoImageView.image = photo
-            }
-            else {
-                photoImageView.image = Contact.defaultPhoto
-            }
+            photoImageView.image = contact.photoOrDefault()
             nameLabel.text = contact.fullName()
             // TODO: Each of these should be it's own field and they should be editable in some way (likely an edit button on the navbar)
-            let nickName = (contact.nickName ?? "None")
+            let nickName = contact.nickName.characters.count > 0 ? contact.nickName : "None"
             var details = "Nickname: \(nickName)\n" +
-            "Gender: \(contact.gender)\n"
+                    "Gender: \(Localized.gender(contact.gender))\n"
             // Contact Methods...
             for contactMethod in contact.contactMethods {
                 details += contactMethod.info.description + ": " + contactMethod.label + ": "

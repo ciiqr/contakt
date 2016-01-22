@@ -23,6 +23,8 @@ struct Visuals
     static let navBarBackgroundColour = lightBlue
     static let navBarTint = white
     static let navBarTextAttributes = [NSForegroundColorAttributeName : navBarTint]
+    static let navBarIcon = UIImage(imageLiteral: "navbar-icon")
+    static let navBarFont = UIFont(name: "AvenirNext", size: 20)
     
     // MARK: Background
     static let backgroundColour = lightGray
@@ -37,4 +39,7 @@ struct Visuals
     static let searchBarBackgroundColour = lightBlue
     static let searchBarTint = white
     static let searchBarTextFieldTint = lightBlue
+    
+    // MARK: Contact photo
+    static let contactDefaultPhoto = UIImage(imageLiteral: "contact-photo-default")
 }

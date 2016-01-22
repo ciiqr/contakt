@@ -9,8 +9,9 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate
+{
+    // MARK: Properties
     var window: UIWindow?
 
 
@@ -71,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return true
         }
         // This prevents us from starting up in the contact details vc with the first contact
-        // TODO: This still could be improved though (ie. when on the master vc and you rotate twice, it switches to the details vc, which could be prevented by keeping track of when the user selects a contact and when they return back from that contacts details page)
+        // TODO: This still could be improved though (ie. when on the master vc and you rotate twice, it switches to the details vc, which could be prevented by keeping track of when the user explicitly selects a contact and when they return back from that contacts details page)
         if firstTime {
             firstTime = false
             return true

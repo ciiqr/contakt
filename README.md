@@ -1,10 +1,13 @@
 # contakt
 iOS address book app
 
-[//]: # (TODO: Update screenshot, also probably also want an iPad screenshot)
-![Screenshot][screenshot]
+![Icon][icon]
+
+![Screenshot Split][screenshot-split]
+![Screenshot Search][screenshot-search]
 
 ## Summary
+This project is a work in progress.
 ### Approach
 I first designed on paper what I would optimally like the app to look like.
 ![The initial diagram][initial-diagram]
@@ -29,7 +32,6 @@ Then I started thinking about the model, I wanted something flexible enough to i
 
 ### TODO
 * Various UI improvements (1-2 hours)
-* App icon (2-5 hours)
 * Actual addresses (30 minutes)
 * Store the contacts in either core data or sqlite (currently just have a static list of contacts) (1-2 days)
 * Create/Update/Delete contacts (6-8 days, though 3-4 for basic functionality)
@@ -45,6 +47,14 @@ Then I started thinking about the model, I wanted something flexible enough to i
 * Custom url to import contacts from other apps (4-5 hours)
 * Load contacts from facebook, google, etc (2 days each)
 
+## Legal
+Public domain, see [LICENSE](https://github.com/ciiqr/contakt/blob/master/LICENSE) for more info.
+### Icon
+The icon is based on this image [People by Richard Pasqua from the Noun Project](https://thenounproject.com/term/people/12342/).
+
+
 [//]: # (Resource References)
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
-[screenshot]: http://williamvilleneuve.ca/static-resources/github/contakt/images/alpha-screenshot.png "Screenshot"
+[screenshot-search]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-search.png "Screenshot of Search"
+[screenshot-split]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-split.png "Screenshot of Split View"
+[icon]: http://williamvilleneuve.ca/static-resources/github/contakt/images/icon-styled.png "App icon"

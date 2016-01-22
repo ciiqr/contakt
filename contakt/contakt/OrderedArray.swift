@@ -16,10 +16,10 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     typealias Element = T
     typealias Predicate = (Element, Element) -> Bool
     
-    // MARK: - Instance Variables
+    // MARK: - Properties
+    // MARK: Instance
     private var data = [Element]()
-    var predicate: Predicate
-        {
+    var predicate: Predicate {
         didSet {
             self.data.sortInPlace { self.predicate($0, $1) }
         }
@@ -119,7 +119,8 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
         if self.indexMatches(index, value: value) {
             data[index] = value
         }
-        else { // else, insert at the given index
+        else // else, insert at the given index
+        {
             self.data.insert(value, atIndex: index)
         }
     }
@@ -199,7 +200,8 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     typealias Element = T
     typealias Predicate = (Element, Element) -> Bool
     
-    // MARK: - Instance Variables
+    // MARK: - Properties
+    // MARK: Instance
     private var data = [Element]()
     var predicate: Predicate  = { $0 < $1 }
     {
@@ -306,7 +308,8 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
         if self.indexMatches(index, value: value) {
             data[index] = value
         }
-        else { // else, insert at the given index
+        else // else, insert at the given index
+        {
             self.data.insert(value, atIndex: index)
         }
     }

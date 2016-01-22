@@ -12,52 +12,32 @@ import UIKit
 enum ContactsSortOrder {
     case LastName
     case FirstName
-    // TODO: Other sort orders?
+    // TODO: Other sort orders? (except only if there's a reasonable secondary sort order...)
 }
 
 enum ContactSearchScope {
     case All
     case Names
     case OtherInfo
-    // TODO: Maybe more ;)
-    // TODO: Infact maybe: All, Names, Contact, Other
+    // TODO: Propably go with: All, Names, Contact, Other
 }
 
 class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, UIGestureRecognizerDelegate
 {
-    // MARK: Class Properties
+    // MARK: - Properties
+    // MARK: Class
     static let showContactDetailsSequeIdentifier = "showDetail"
     static let selectableSortOrders: [ContactsSortOrder] = [.FirstName, .LastName]
     static let selectableSearchScopes: [ContactSearchScope] = [.All, .Names, .OtherInfo]
     
-    // MARK: Instance Variables
+    // MARK: Instance
     var detailViewController: ContactDetailsVC? = nil
     var searchController: UISearchController? = nil
     
     // This is an unsorted list of contacts
     var contactsList = [Contact]()
-    // This is a sorted dictionary mapping section headers to lists of contacts
+    // This is a sorted dictionary mapping section headers to lists of sorted contacts (section headers are grouped and sorted by the primary sort order and the contacts within each section are sorted by the secondarySortOrder)
     var filteredContacts = OrderedDictionary<String, OrderedArrayEquatable<Contact>>()
-    
-    var primarySortOrder = ContactsSortOrder.LastName {
-        didSet {
-            // Only re-sort if the sort order has changed
-            if primarySortOrder == oldValue {
-                return
-            }
-            // re-order contatcs based on new sort order...
-            updateFilteredContacts()
-        }
-    }
-    var secondarySortOrder: ContactsSortOrder {
-        switch primarySortOrder
-        {
-        case .FirstName:
-            return .LastName;
-        case .LastName:
-            return .FirstName;
-        }
-    }
     
     var searchScope = ContactSearchScope.All {
         didSet {
@@ -70,12 +50,36 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         }
     }
     
-    // MARK: Life Cycle Functions
+    var primarySortOrder = ContactsSortOrder.LastName {
+        didSet {
+            // Only re-sort if the sort order has changed
+            if primarySortOrder == oldValue {
+                return
+            }
+            // re-order contatcs based on new sort order...
+            updateFilteredContacts()
+        }
+    }
+    
+    // MARK: Calculated
+    var secondarySortOrder: ContactsSortOrder {
+        switch primarySortOrder
+        {
+        case .FirstName:
+            return .LastName;
+        case .LastName:
+            return .FirstName;
+        }
+    }
+    
+    // MARK: - Methods
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: have a constant for the app name...
-        self.title = "Contakt"
+        // TODO: On larger devices with the expand button, you press it it says 'Master' instead of back unless out title is set in which case either way it's the title... But I just want it to say Back always
+//        self.title = Constants.appName
+        loadNavbarIcon()
         
         // Adjust the colour of the letters
         tableView.sectionIndexColor = Visuals.contactsListSectionIndexColor
@@ -141,20 +145,17 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         }
     }
     
-    // MARK: Protocols
-    // MARK: Table View
-    // TODO: Split this up into the tableviews delegate and data source...
+    // MARK: - Protocols
     
+    // MARK: UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return filteredContacts.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        // TODO: What happens when the section header is more than a single character?...
         return self.filteredContacts[OrderedDictionaryIndex(section)].key
     }
     
-    // TODO: Consider changing to list all letters... (except that then that would need to be localized...)
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         var titles = [UITableViewIndexSearch]
         titles.appendContentsOf(self.filteredContacts.keys)
@@ -181,27 +182,19 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath)
+        // Ensure we have the view we expect on the cell
+        guard let textLabel = cell.textLabel, detailTextLabel = cell.detailTextLabel, imageView = cell.imageView
+        else { return cell }
         
         let contact = contactFor(indexPath)
         
-        cell.textLabel!.text = contact.fullName(middleInitial: true)
+        // Display contact info
+        // TODO: Have a setting that allows the user to specify that nickname is the preferred field for the contact list
+        textLabel.text = contact.fullName(middleInitial: true)
+        detailTextLabel.text = contact.nickName
+        imageView.image = contact.photoOrDefault()
         
-        // TODO: Shouldn't use forced optional unwrapping, even though the default project did so...
-        if let nickName = contact.nickName {
-            cell.detailTextLabel!.text = nickName
-        }
-        else {
-            cell.detailTextLabel!.text = ""
-        }
-        // TODO: Maybe contact.photo should be a property that just returns the default if it isn't set?
-        if let photo = contact.photo {
-            cell.imageView!.image = photo
-        }
-        else {
-            cell.imageView!.image = Contact.defaultPhoto
-        }
-        
-        // TODO: Apply a circular mask to the contact photo (also, default photo should have a white background once  get around to doing this)
+        // TODO: Apply a circular mask to the contact photo (also, default photo should have a white background once I get around to doing this)
         
         return cell
     }
@@ -215,18 +208,19 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             removeContact(index)
         }
         else if editingStyle == .Insert {
-            // TODO: Implement (If section already exists, insert appropriatly, else, insert new section with given row)
+            // TODO: Implement (If section already exists, insert appropriatly, else, insert new section with given row, though, this logic already exists in the code for updating the filteredContacts)
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
     
+    // MARK: UITableViewDelegate
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         // NOTE: This only displays the actions that the specific contact supports
         
         let contact = contactFor(indexPath)
         var actions = [UITableViewRowAction]()
         
-        // TODO: Need contactMethodDisplayName for the Email and Phone strings
+        // TODO: Need Localized.contactMethod() for the Email and Phone strings
         // Has at least 1 email
         if contact.contactMethods.any({$0.isEmail}) {
             let email = UITableViewRowAction(style: .Normal, title: "Email", handler: emailActionHandler)
@@ -313,32 +307,27 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             tableView.deleteRowsAtIndexPaths([index], withRowAnimation: .Fade)
         }
         else {
+            // TODO: need to remove the array from the filteredContacts...
+
             // Remove the entire section
             tableView.deleteSections(NSIndexSet(index: index.section), withRowAnimation: .Fade)
         }
     }
     
-    private func contactSection(contact: Contact) -> String? {
+    private func contactSection(contact: Contact) -> String {
         return sortOrderKey(primarySortOrder, forContact: contact)
     }
     
-    private func sortOrderKey(sortOrder: ContactsSortOrder, forContact contact: Contact) -> String? {
-        // TODO: Decide if I don't want to just force title case for the names, making this irrelevant...
+    
+    private func sortOrderKey(sortOrder: ContactsSortOrder, forContact contact: Contact) -> String {
+        // NOTE: Luckily in swift Character represents a single 'human-readable' character, we don't need to worry about unicode!
         switch sortOrder
         {
         case .FirstName:
-            if let character = contact.firstNameFirstCharacter {
-                return character.uppercaseString
-            }
-            break
-            
+            return String(contact.firstName.characters.prefix(1)).uppercaseString
         case .LastName:
-            if let character = contact.lastNameFirstCharacter {
-                return character.uppercaseString
-            }
-            break
+            return String(contact.lastName.characters.prefix(1)).uppercaseString
         }
-        return nil
     }
     
     private func sectionContactsOrderPredicate(first: Contact, second: Contact) -> Bool {
@@ -351,25 +340,22 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         }
     }
     
-    // TODO: Should be a stand alone function...
-    private func insensitiveContains(stringToSearch: String, _ stringToFind: String) -> Bool {
-        return stringToSearch.lowercaseString.containsString(stringToFind.lowercaseString)
-    }
-    
     private func appendSearchableContactFieldsAll(inout contactFieldsToSearch: [String], contact: Contact) {
         appendSearchableContactFieldsNames(&contactFieldsToSearch, contact: contact)
         appendSearchableContactFieldsOtherInfo(&contactFieldsToSearch, contact: contact)
     }
     
     private func appendSearchableContactFieldsNames(inout contactFieldsToSearch: [String], contact: Contact) {
-        contactFieldsToSearch.appendContentsOf([contact.firstName, contact.lastName, contact.middleName])
-        if let nickName = contact.nickName {
-            contactFieldsToSearch.append(nickName)
-        }
+        contactFieldsToSearch.appendContentsOf([
+            contact.firstName,
+            contact.lastName,
+            contact.nickName, // TODO: Consider even making nickname more important...
+            contact.middleName
+        ])
     }
     
     private func appendSearchableContactFieldsOtherInfo(inout contactFieldsToSearch: [String], contact: Contact) {
-        contactFieldsToSearch.append(genderDisplayName(contact.gender))
+        contactFieldsToSearch.append(Localized.gender(contact.gender))
         
         // TODO: Consider also appending the contact method's label...
         for contactMethod in contact.contactMethods {
@@ -406,7 +392,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         // Go through the parts and at least one of the fields in the contact must match the given part
         for part in searchParts {
             // If none of the fields contain this part of the search, this contact doesn't match the search
-            if !contactFieldsToSearch.any({ self.insensitiveContains($0, part) }) {
+            if !contactFieldsToSearch.any({ $0.insensitiveContains(part) }) {
                 return false
             }
         }
@@ -416,29 +402,28 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     private func updateFilteredContacts() {
         let searchString = self.searchController?.searchBar.text
         
-        // Remove old contatcs
-        // TODO: Maybe rename to orderedContacts...
+        // Remove old contacts
         self.filteredContacts.removeAll(keepCapacity: true)
         
         // Add all new contacts...
-        for contact in self.contactsList {
+        for contact in self.contactsList
+        {
             // Get the section to store the contact in
-            if let sectionHeader = self.contactSection(contact) {
-                
-                // Ensure either, the contact matches the current search OR the there is no searchController/text
-                if searchString == nil || contactMatchesSearch(contact, search: searchString!) {
-                    // Either
-                    if let _ = self.filteredContacts[sectionHeader] {
-                        // append to existing array
-                        self.filteredContacts[sectionHeader]!.append(contact)
-                    }
-                    else { // create a new array
-                        self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
-                    }
+            let sectionHeader = self.contactSection(contact)
+            
+            // Ensure either, the contact matches the current search OR the there is no searchController/text
+            if searchString == nil || contactMatchesSearch(contact, search: searchString!)
+            {
+                // Either
+                if let _ = self.filteredContacts[sectionHeader]
+                {
+                    // append to existing array
+                    self.filteredContacts[sectionHeader]!.append(contact)
                 }
-            }
-            else {
-                // TODO: Handle improper contact without section
+                else // create a new array
+                {
+                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
+                }
             }
         }
         
@@ -447,15 +432,11 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     private func loadContacts() {
-        // TODO: There should be loading indicators...
-        // TODO: Will need ensure the data is in the correct order... based on the current sort order
-        
-        // TODO: App delegate should start loading/caching the contacts as soon as possible so that we can retrieve them slightly faster once we get here
-        
-        // TODO: Store contacts array and when the sort order changes, it needs to change... the contacts dictionary pretty much entirely...
+        // TODO: Concerns for once this isn't loading static data
+        // - There should be loading indicators...
+        // - App delegate should start loading/caching the contacts as soon as possible so that we can retrieve them slightly faster once we get here
+        // - This should check if there's any existing contacts in the array and merge the lists (in the case where loading takes a while and the user has added a new contact in the mean time)
         ContactLoader.loadContacts { (contacts) in
-            // TODO: This should check if there's any existing contacts in the array and merge the lists (in the case where loading takes a while and the user has added a new contact in the mean time)
-            
             self.contactsList = contacts
             self.updateFilteredContacts()
             
@@ -477,8 +458,26 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         self.primarySortOrder = ContactsListVC.selectableSortOrders[segment.selectedSegmentIndex]
     }
     
+    private func loadNavbarIcon() {
+        // TODO: Maybe make the icon a bit bigger...
+        // TODO: Maybe also display the title in our custom view so we can shift it over a bit
+        // Icon
+        let imageView = UIImageView(image: Visuals.navBarIcon)
+        let iconItem = UIBarButtonItem(customView: imageView)
+        
+        // Title
+        // TODO: Not actually sure what the frame should be set to here... is there something reasonable we can use? This works at least but I'm not convinced it's that great...
+        let label = UILabel(frame: self.navigationController!.navigationBar.frame)
+        let titleItem = UIBarButtonItem(customView: label)
+        label.text = Constants.appName
+        label.textColor = Visuals.navBarTint
+        label.font = Visuals.navBarFont
+        
+        self.navigationItem.leftBarButtonItems = [iconItem, titleItem]
+    }
+    
     private func loadSortOrderSwitcher() {
-        let sortOrderOptions = ContactsListVC.selectableSortOrders.map(sortOrderDisplayName)
+        let sortOrderOptions = ContactsListVC.selectableSortOrders.map(Localized.sortOrder)
         let currentSortOrderIndex = ContactsListVC.selectableSortOrders.indexOf(primarySortOrder) ?? 0
         
         // Create segmented control
@@ -495,7 +494,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     private func loadSearchController() {
-        let searchScopes = ContactsListVC.selectableSearchScopes.map(self.searchScopeDisplayName)
+        let searchScopes = ContactsListVC.selectableSearchScopes.map(Localized.searchScope)
         let currentSearchScopeIndex = ContactsListVC.selectableSearchScopes.indexOf(self.searchScope) ?? 0
         let controller = UISearchController(searchResultsController: nil)
         
@@ -533,46 +532,6 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             // Set DetailsVC's contact to the first in our filtered list
             self.detailViewController?.contact = filteredContacts[OrderedDictionaryIndex(0)].value[0]
             // TODO: The only problem with this is that the selected row is not highlighted, and I can't use tableView.selectRowAtIndexPath because that will navigate when I don't want it to... So I suppose setting highlighted on the cell's
-        }
-    }
-    
-    // TODO: These should be moved elsewhere...
-    private func sortOrderDisplayName(order: ContactsSortOrder) -> String {
-        // TODO: Localize
-        switch order
-        {
-        case .FirstName:
-            return "First"
-        case .LastName:
-            return "Last"
-        }
-    }
-    
-    private func searchScopeDisplayName(scope: ContactSearchScope) -> String {
-        // TODO: Localize
-        switch scope
-        {
-        case .All:
-            return "All"
-        case .Names:
-            return "Names"
-        case .OtherInfo:
-            return "Other Info"
-        }
-    }
-    
-    private func genderDisplayName(gender: Gender) -> String {
-        // TODO: Localize
-        switch gender
-        {
-        case .Female:
-            return "Female"
-        case .Male:
-            return "Male"
-        case .NonBinary:
-            return "Non-Binary"
-        case .None:
-            return "None"
         }
     }
     

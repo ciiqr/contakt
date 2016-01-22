@@ -11,15 +11,13 @@ import UIKit
 
 class Contact : Equatable
 {
-    // MARK: Class Variables
-    static let defaultPhoto = UIImage(imageLiteral: "contact-photo-default")
-    
-    // MARK: Instance Variables
+    // MARK: - Properties
+    // MARK: Instance
     // Names
     var firstName: String
     var middleName: String
     var lastName: String
-    var nickName: String?
+    var nickName: String
 
     // Other Info
     var gender: Gender
@@ -35,35 +33,8 @@ class Contact : Equatable
     // - Have dates (Birth day, Aniversary, etc) generic like ContactMethod's
     // - Title (Mr, Ms, etc)
     
-    // MARK: Properties
-    func fullName(middleInitial middleInitial: Bool = false) -> String {
-        if middleInitial {
-            if let middleFirst = self.middleName.characters.first {
-                return "\(self.firstName) \(String(middleFirst)). \(self.lastName)"
-            }
-        }
-        // If the middle name isn't empty, display with a space after it, else, empty string
-        let formattedMiddle = self.middleName.characters.count > 0 ? self.middleName + " " : ""
-        return "\(self.firstName) \(formattedMiddle)\(self.lastName)"
-    }
-    // NOTE: Luckily in swift Character represents a single 'human-readable' character, we don't need to worry about
-    // unicode, on the down side, swift doesn't have a 'uppercase' methods for characters and so it's most convenient
-    // for us to represent these first characters as String's
-    var firstNameFirstCharacter: String? {
-        if let character = firstName.characters.first {
-            return String(character)
-        }
-        return nil
-    }
-    var lastNameFirstCharacter: String? {
-        if let character = lastName.characters.first {
-            return String(character)
-        }
-        return nil
-    }
-    
     // MARK: Constructors
-    init(firstName: String = "", middleName: String = "", lastName: String = "", nickName: String? = nil,
+    init(firstName: String = "", middleName: String = "", lastName: String = "", nickName: String = "",
         gender: Gender = .None, photo: UIImage? = nil, contactMethods: [ContactMethod] = []) {
             
         self.firstName = firstName
@@ -83,7 +54,7 @@ func ==(lhs: Contact, rhs: Contact) -> Bool {
         lhs.nickName == rhs.nickName &&
         lhs.gender == rhs.gender &&
         lhs.photo == rhs.photo &&
-        // TODO: This currently doesn't check if both arrays contain the same values and for efficiency maybe shouldn't... But it's technically incomplete... Though, it might not be a big deal to compare if we assume there aren't going to be that many contactMethods...
+        // TODO: This currently doesn't check if both arrays contain the same values and for efficiency maybe shouldn't? I mean, if all other fields are equal, this is likely to be the same. But it's technically incomplete... Though, it might not be a big deal to compare if we assume there aren't going to be that many contactMethods...
         lhs.contactMethods.count == rhs.contactMethods.count
     )
 }
