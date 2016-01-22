@@ -19,16 +19,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+        splitViewController.preferredDisplayMode = .AllVisible
         splitViewController.delegate = self
         
         // Change the colour of the navbar
-        UINavigationBar.appearance().barTintColor = Visuals.navBarColour
+        UINavigationBar.appearance().barTintColor = Visuals.navBarBackgroundColour
         UINavigationBar.appearance().tintColor = Visuals.navBarTint
         UINavigationBar.appearance().titleTextAttributes = Visuals.navBarTextAttributes
         
         // Change table view colours
         UITableView.appearance().backgroundColor = Visuals.backgroundColour
         UITableViewCell.appearance().backgroundColor = Visuals.backgroundColour
+        
+        // Change the search bar colours
+        UISearchBar.appearance().barTintColor = Visuals.searchBarBackgroundColour
+        UISearchBar.appearance().tintColor = Visuals.searchBarTint
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = Visuals.searchBarTextFieldTint
 
         return true
     }
@@ -56,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     // MARK: - Split view
-
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? ContactDetailsVC else { return false }

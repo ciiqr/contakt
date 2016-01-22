@@ -8,24 +8,33 @@
 
 import UIKit
 
-class Visuals
+struct Visuals
 {
-    // Constants
+    // MARK: - Constants
+    
+    // MARK: Colours
     private static let white = UIColor.whiteColor()
     private static let lightBlue = UIColor(hex: 0xADD8E6)
     private static let lightGray = UIColor(hex: 0xFCFCFC)
     private static let lightGreen = UIColor(hex: 0xBDDCB6)
     private static let lightPurple = UIColor(hex: 0xC9A3DB)
     
-    // Nav Bar
-    static let navBarColour = lightBlue
+    // MARK: Nav Bar
+    static let navBarBackgroundColour = lightBlue
     static let navBarTint = white
     static let navBarTextAttributes = [NSForegroundColorAttributeName : navBarTint]
     
-    // Background
+    // MARK: Background
     static let backgroundColour = lightGray
     
-    // Contacts List
+    // MARK: Contacts List
     static let contactSwipePhoneActionColour = lightGreen
     static let contactSwipeEmailActionColour = lightPurple
+    static let contactsListSectionIndexColor = lightBlue
+    static let contactsListSectionIndexBackgroundColor = lightGray
+    
+    // MARK: Search bar
+    static let searchBarBackgroundColour = lightBlue
+    static let searchBarTint = white
+    static let searchBarTextFieldTint = lightBlue
 }

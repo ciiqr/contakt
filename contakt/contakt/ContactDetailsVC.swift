@@ -30,46 +30,58 @@ class ContactDetailsVC: UIViewController
         // Do any additional setup after loading the view, typically from a nib.
         self.view.backgroundColor = Visuals.backgroundColour
         
+        // Ensure we always have a back button
+        self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
+        self.navigationItem.leftItemsSupplementBackButton = true
+        
         self.configureView()
     }
     
     // MARK: Methods
     func configureView() {
+        // Ensure we have the views we expect
+        guard let photoImageView = self.photoImageView, nameLabel = self.nameLabel, detailsLabel = self.detailsLabel
+        else {
+            return
+        }
+        
         // Update the user interface for the detail item.
-        if let contact = self.contact,
-            photoImageView = self.photoImageView,
-            nameLabel = self.nameLabel,
-            detailsLabel = self.detailsLabel {
-                
-                // TODO: Add More information...
-                
-                if let photo = contact.photo {
-                    photoImageView.image = photo
+        if let contact = self.contact {
+            
+            // TODO: Add More information...
+            
+            if let photo = contact.photo {
+                photoImageView.image = photo
+            }
+            else {
+                photoImageView.image = Contact.defaultPhoto
+            }
+            nameLabel.text = contact.fullName()
+            // TODO: Each of these should be it's own field and they should be editable in some way (likely an edit button on the navbar)
+            let nickName = (contact.nickName ?? "None")
+            var details = "Nickname: \(nickName)\n" +
+            "Gender: \(contact.gender)\n"
+            // Contact Methods...
+            for contactMethod in contact.contactMethods {
+                details += contactMethod.info.description + ": " + contactMethod.label + ": "
+                switch contactMethod.info
+                {
+                case .Email(let addr):
+                    details += addr
+                    break;
+                case .Phone(let number):
+                    details += number
+                    break
                 }
-                else {
-                    photoImageView.image = Contact.defaultPhoto
-                }
-                nameLabel.text = contact.fullName()
-                // TODO: Each of these should be it's own field and they should be editable in some way (likely an edit button on the navbar)
-                let nickName = (contact.nickName ?? "None")
-                var details = "Nickname: \(nickName)\n" +
-                    "Gender: \(contact.gender)\n"
-                // Contact Methods...
-                for contactMethod in contact.contactMethods {
-                    details += contactMethod.info.description + ": " + contactMethod.label + ": "
-                    switch contactMethod.info
-                    {
-                    case .Email(let addr):
-                        details += addr
-                        break;
-                    case .Phone(let number):
-                        details += number
-                        break
-                    }
-                    details += "\n"
-                }
-                
-                detailsLabel.text = details
+                details += "\n"
+            }
+            
+            detailsLabel.text = details
+        }
+        else // No contact
+        {
+            // TODO: Need to make this look better, and only ever display when there are absolutely 0 contacts...
+            detailsLabel.text = "No contact selected!"
         }
     }
 }

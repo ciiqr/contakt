@@ -73,11 +73,12 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: have a constant for the app name...
+        self.title = "Contakt"
+        
         // Adjust the colour of the letters
-        // TODO: Create 2 special properties for these contactsListSectionIndexColor, contactsListSectionIndexBackgroundColor
-        tableView.sectionIndexColor = Visuals.navBarColour
-        tableView.sectionIndexBackgroundColor = Visuals.backgroundColour
-        // TODO: Consider dynamically setting tableView.sectionIndexMinimumDisplayRowCount based on the current size and number of visible rows... This way we can have it only display if there's a lot of contacts...
+        tableView.sectionIndexColor = Visuals.contactsListSectionIndexColor
+        tableView.sectionIndexBackgroundColor = Visuals.contactsListSectionIndexBackgroundColor
         
         // Add additional views
         loadSortOrderSwitcher()
@@ -85,14 +86,25 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         loadSearchController()
         
         // If we have a splitViewController, use it to retrieve the detailsViewController
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            // TODO: No explicit unwrapping
-            self.detailViewController = (controllers[controllers.count-1] as? UINavigationController)!.topViewController as? ContactDetailsVC
+        if let controllers = self.splitViewController?.viewControllers {
+            
+            // We have the detailsVC we expected
+            if let detailsVC = (controllers[controllers.count-1] as? UINavigationController)!.topViewController as? ContactDetailsVC {
+                self.detailViewController = detailsVC
+            }
+            else {
+                // TODO: Improper detailsVC, must be a programmer error...
+            }
         }
         
         // Start loading the contacts
         loadContacts()
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        preselectContactIfNeedBe()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -437,19 +449,8 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     private func onDoneLoadingContacts() {
-        // Select first but only if we're displaying the detailVC
-        
-        // TODO: Need to fix this... atm we don't display the contacts info until the user selects one of them... ugh
-        // NOTE: window is a double optional...
-        //        if let split = self.splitViewController {
-        // Ensure we're displaying the detailVC
-        // TODO: Fix this up a bit
-        //            if split.collapsed && contacts.count > 0 && contacts[0].count > 0 {
-        //                // Select the first contact
-        //                // TODO: should use selectRowAtIndexPath instead
-        //                self.detailViewController?.contact = contacts[0][0]
-        //            }
-        //        }
+        // Select first row if necessary
+        preselectContactIfNeedBe()
     }
     
     func onSortOrderSwitcherChange(segment: UISegmentedControl) {
@@ -463,10 +464,11 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     private func loadSortOrderSwitcher() {
         let sortOrderOptions = ContactsListVC.selectableSortOrders.map(sortOrderDisplayName)
+        let currentSortOrderIndex = ContactsListVC.selectableSortOrders.indexOf(primarySortOrder) ?? 0
         
         // Create segmented control
         let segmentedControl: UISegmentedControl = UISegmentedControl(items: sortOrderOptions)
-        segmentedControl.selectedSegmentIndex = ContactsListVC.selectableSortOrders.indexOf(primarySortOrder) ?? 0
+        segmentedControl.selectedSegmentIndex = currentSortOrderIndex
         segmentedControl.addTarget(self, action: "onSortOrderSwitcherChange:", forControlEvents: .ValueChanged)
         
         // Set as the right item
@@ -479,13 +481,14 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     private func loadSearchController() {
         let searchScopes = ContactsListVC.selectableSearchScopes.map(self.searchScopeDisplayName)
+        let currentSearchScopeIndex = ContactsListVC.selectableSearchScopes.indexOf(self.searchScope) ?? 0
         let controller = UISearchController(searchResultsController: nil)
         
         // Setup the search controller
         controller.searchResultsUpdater = self
         controller.dimsBackgroundDuringPresentation = false
         controller.searchBar.scopeButtonTitles = searchScopes
-        controller.searchBar.selectedScopeButtonIndex = ContactsListVC.selectableSearchScopes.indexOf(self.searchScope) ?? 0
+        controller.searchBar.selectedScopeButtonIndex = currentSearchScopeIndex
         controller.searchBar.delegate = self
         controller.searchBar.sizeToFit() // Fix for search bar sizing issues
         
@@ -499,6 +502,14 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         
         // NOTE: This is necessary because otherwise when we select a contact, the search bar will still be visible...
         self.definesPresentationContext = true
+    }
+    
+    private func preselectContactIfNeedBe() {
+        // We have contacts
+        if self.detailViewController?.contact == nil && filteredContacts.count > 0 && filteredContacts[OrderedDictionaryIndex(0)].value.count > 0 {
+            self.detailViewController?.contact = filteredContacts[OrderedDictionaryIndex(0)].value[0]
+            // TODO: The only problem with this is that the selected row is not highlighted, and I can't use tableView.selectRowAtIndexPath because that will navigate when I don't want it to... So I suppose setting highlighted on the cell's
+        }
     }
     
     // TODO: These should be moved elsewhere...
