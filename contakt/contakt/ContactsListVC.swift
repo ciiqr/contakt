@@ -23,7 +23,7 @@ enum ContactSearchScope {
     // TODO: Infact maybe: All, Names, Contact, Other
 }
 
-class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate
+class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, UIGestureRecognizerDelegate
 {
     // MARK: Class Properties
     static let showContactDetailsSequeIdentifier = "showDetail"
@@ -97,6 +97,11 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
                 // TODO: Improper detailsVC, must be a programmer error...
             }
         }
+        
+        // Override the tap handler on the table view
+        let tap = UITapGestureRecognizer(target: self, action: "tableViewTapHandler:")
+        tap.delegate = self
+        self.tableView.addGestureRecognizer(tap)
         
         // Start loading the contacts
         loadContacts()
@@ -268,6 +273,15 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             // Go to the detail page for the contact
             performSegueWithIdentifier(ContactsListVC.showContactDetailsSequeIdentifier, sender: contact)
         }
+    }
+    
+    // MARK: UIGestureRecognizerDelegate
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        // If the tap was on the tableview itself(and not any of it's children), handle it with our custom handler
+        if let view = touch.view {
+            return view is UITableView
+        }
+        return false
     }
     
     // MARK: - Methods
@@ -560,6 +574,14 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         case .None:
             return "None"
         }
+    }
+    
+    private func dismissSearchBarKeyboard() {
+        self.searchController?.searchBar.resignFirstResponder()
+    }
+    
+    func tableViewTapHandler(tap: UITapGestureRecognizer) {
+        dismissSearchBarKeyboard()
     }
     
     private func initiateContact(contact: Contact, contactMethod: ContactMethod)
