@@ -124,6 +124,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             
             // If we have a Contact instance, and the destination is a ContactDetailsVC instance as we expect, pass the contact along
             if let contact = contact, controller = (segue.destinationViewController as! UINavigationController).topViewController as? ContactDetailsVC {
+                self.detailViewController = controller
                 controller.contact = contact
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
@@ -410,6 +411,10 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             }
         }
         
+        // TODO: This doesn't want to update the details vc when switching search scope...
+        // Select first row if necessary
+        preselectContactIfNeedBe()
+        
         // Update ui
         tableView.reloadData()
     }
@@ -422,14 +427,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         ContactLoader.loadContacts { (contacts) in
             self.contactsList = contacts
             self.updateFilteredContacts()
-            
-            self.onDoneLoadingContacts()
         }
-    }
-    
-    private func onDoneLoadingContacts() {
-        // Select first row if necessary
-        preselectContactIfNeedBe()
     }
     
     func onSortOrderSwitcherChange(segment: UISegmentedControl) {

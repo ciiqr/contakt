@@ -14,7 +14,7 @@ extension UIColor
     // UIColor(hex: 0xFF00FF)
     // UIColor(hexAlpha: 0x00000088)
     
-    convenience init(hexAlpha hex: Int)
+    convenience init(hexAlpha hex: Int64)
     {
         assert(hex <= 0xFFFFFFFF, "hex colours with alpha should be represented with 8 hex digits, no more")
         

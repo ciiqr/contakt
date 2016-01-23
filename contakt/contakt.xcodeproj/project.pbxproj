@@ -25,7 +25,6 @@
 		3D3B379C1C4D8D29002F3091 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379B1C4D8D29002F3091 /* Assets.xcassets */; };
 		3D3B379F1C4D8D29002F3091 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379D1C4D8D29002F3091 /* LaunchScreen.storyboard */; };
 		3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37A91C4D8D29002F3091 /* contaktTests.swift */; };
-		3D3B37B51C4D8D29002F3091 /* contaktUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37B41C4D8D29002F3091 /* contaktUITests.swift */; };
 		3D3B37C41C4D8E62002F3091 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C31C4D8E62002F3091 /* Contact.swift */; };
 		3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C31C4D8E62002F3091 /* Contact.swift */; };
 		3D3B37C71C4D8F18002F3091 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C61C4D8F18002F3091 /* Gender.swift */; };
@@ -69,13 +68,6 @@
 			remoteGlobalIDString = 3D3B378E1C4D8D29002F3091;
 			remoteInfo = contakt;
 		};
-		3D3B37B11C4D8D29002F3091 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D3B37871C4D8D29002F3091 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D3B378E1C4D8D29002F3091;
-			remoteInfo = contakt;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -96,7 +88,6 @@
 		3D3B37A51C4D8D29002F3091 /* contaktTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = contaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3B37A91C4D8D29002F3091 /* contaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contaktTests.swift; sourceTree = "<group>"; };
 		3D3B37AB1C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D3B37B01C4D8D29002F3091 /* contaktUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = contaktUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3B37B41C4D8D29002F3091 /* contaktUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contaktUITests.swift; sourceTree = "<group>"; };
 		3D3B37B61C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3B37C31C4D8E62002F3091 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -133,13 +124,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D3B37AD1C4D8D29002F3091 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -168,7 +152,6 @@
 			children = (
 				3D3B378F1C4D8D29002F3091 /* contakt.app */,
 				3D3B37A51C4D8D29002F3091 /* contaktTests.xctest */,
-				3D3B37B01C4D8D29002F3091 /* contaktUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -336,24 +319,6 @@
 			productReference = 3D3B37A51C4D8D29002F3091 /* contaktTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3D3B37AF1C4D8D29002F3091 /* contaktUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3D3B37BF1C4D8D29002F3091 /* Build configuration list for PBXNativeTarget "contaktUITests" */;
-			buildPhases = (
-				3D3B37AC1C4D8D29002F3091 /* Sources */,
-				3D3B37AD1C4D8D29002F3091 /* Frameworks */,
-				3D3B37AE1C4D8D29002F3091 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3D3B37B21C4D8D29002F3091 /* PBXTargetDependency */,
-			);
-			name = contaktUITests;
-			productName = contaktUITests;
-			productReference = 3D3B37B01C4D8D29002F3091 /* contaktUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -366,12 +331,9 @@
 				TargetAttributes = {
 					3D3B378E1C4D8D29002F3091 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = M8BUXSY98P;
 					};
 					3D3B37A41C4D8D29002F3091 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 3D3B378E1C4D8D29002F3091;
-					};
-					3D3B37AF1C4D8D29002F3091 = {
 						CreatedOnToolsVersion = 7.2;
 						TestTargetID = 3D3B378E1C4D8D29002F3091;
 					};
@@ -392,7 +354,6 @@
 			targets = (
 				3D3B378E1C4D8D29002F3091 /* contakt */,
 				3D3B37A41C4D8D29002F3091 /* contaktTests */,
-				3D3B37AF1C4D8D29002F3091 /* contaktUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -409,13 +370,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3D3B37A31C4D8D29002F3091 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D3B37AE1C4D8D29002F3091 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,14 +441,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D3B37AC1C4D8D29002F3091 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D3B37B51C4D8D29002F3091 /* contaktUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -502,11 +448,6 @@
 			isa = PBXTargetDependency;
 			target = 3D3B378E1C4D8D29002F3091 /* contakt */;
 			targetProxy = 3D3B37A61C4D8D29002F3091 /* PBXContainerItemProxy */;
-		};
-		3D3B37B21C4D8D29002F3091 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D3B378E1C4D8D29002F3091 /* contakt */;
-			targetProxy = 3D3B37B11C4D8D29002F3091 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -617,10 +558,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = contakt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.williamvilleneuve.contakt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -628,10 +573,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = contakt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.williamvilleneuve.contakt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -656,30 +605,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ca.williamvilleneuve.contaktTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/contakt.app/contakt";
-			};
-			name = Release;
-		};
-		3D3B37C01C4D8D29002F3091 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = contaktUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.williamvilleneuve.contaktUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = contakt;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		3D3B37C11C4D8D29002F3091 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = contaktUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.williamvilleneuve.contaktUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = contakt;
-				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
@@ -709,15 +634,6 @@
 			buildConfigurations = (
 				3D3B37BD1C4D8D29002F3091 /* Debug */,
 				3D3B37BE1C4D8D29002F3091 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3D3B37BF1C4D8D29002F3091 /* Build configuration list for PBXNativeTarget "contaktUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3D3B37C01C4D8D29002F3091 /* Debug */,
-				3D3B37C11C4D8D29002F3091 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
