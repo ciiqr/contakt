@@ -24,7 +24,6 @@
 		3D3B379A1C4D8D29002F3091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B37981C4D8D29002F3091 /* Main.storyboard */; };
 		3D3B379C1C4D8D29002F3091 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379B1C4D8D29002F3091 /* Assets.xcassets */; };
 		3D3B379F1C4D8D29002F3091 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B379D1C4D8D29002F3091 /* LaunchScreen.storyboard */; };
-		3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37A91C4D8D29002F3091 /* contaktTests.swift */; };
 		3D3B37C41C4D8E62002F3091 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C31C4D8E62002F3091 /* Contact.swift */; };
 		3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C31C4D8E62002F3091 /* Contact.swift */; };
 		3D3B37C71C4D8F18002F3091 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B37C61C4D8F18002F3091 /* Gender.swift */; };
@@ -86,7 +85,6 @@
 		3D3B379E1C4D8D29002F3091 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D3B37A01C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3B37A51C4D8D29002F3091 /* contaktTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = contaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3D3B37A91C4D8D29002F3091 /* contaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contaktTests.swift; sourceTree = "<group>"; };
 		3D3B37AB1C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3B37B41C4D8D29002F3091 /* contaktUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contaktUITests.swift; sourceTree = "<group>"; };
 		3D3B37B61C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -177,9 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				3D8EF8741C53210800DC2F45 /* Utilities */,
-				3D3B37A91C4D8D29002F3091 /* contaktTests.swift */,
 				3D3B37AB1C4D8D29002F3091 /* Info.plist */,
-				3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */,
 			);
 			path = contaktTests;
 			sourceTree = "<group>";
@@ -255,6 +251,14 @@
 			name = Loaders;
 			sourceTree = "<group>";
 		};
+		3D6026CB1C53FADF008A3BF3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		3D8EF86D1C531CD200DC2F45 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				3D8EF8751C53211400DC2F45 /* Data Structures */,
+				3D6026CB1C53FADF008A3BF3 /* Extensions */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -435,7 +440,6 @@
 				3D8EF8731C531E3E00DC2F45 /* ContactSearchScope.swift in Sources */,
 				3D8EF8701C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */,
 				3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */,
-				3D3B37AA1C4D8D29002F3091 /* contaktTests.swift in Sources */,
 				3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */,
 				3D3B37CE1C4D9245002F3091 /* ContactMethod.swift in Sources */,
 			);

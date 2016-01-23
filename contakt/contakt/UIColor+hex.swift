@@ -14,6 +14,7 @@ extension UIColor
     // UIColor(hex: 0xFF00FF)
     // UIColor(hexAlpha: 0x00000088)
     
+    // TODO: Maybe rename to rgb and rgba
     convenience init(hexAlpha hex: Int64)
     {
         assert(hex <= 0xFFFFFFFF, "hex colours with alpha should be represented with 8 hex digits, no more")

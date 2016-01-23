@@ -406,7 +406,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
                 }
                 else // create a new array
                 {
-                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(predicate: sectionContactsOrderPredicate, elements: contact)
+                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(elements: contact, predicate: sectionContactsOrderPredicate)
                 }
             }
         }

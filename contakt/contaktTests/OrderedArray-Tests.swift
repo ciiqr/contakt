@@ -215,8 +215,55 @@ class OrderedArray_Tests: XCTestCase
         XCTAssert(orderedArray.count == 8)
         XCTAssertEqual(orderedArray.data, [2, 3, 10, 15, 20, 32, 49, 99])
     }
+    
+    // MARK: Equatable
+    
+    func test_equalsOperator_equal() {
+        let orderedArray1: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        let orderedArray2: OrderedArray<Int> = [2, 3, 10, 15, 20, 32, 49, 99]
+        
+        XCTAssert(orderedArray1 == orderedArray2)
+    }
+    
+    func test_equalsOperator_notEqual() {
+        let orderedArray1: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        let orderedArray2: OrderedArray<Int> = [2, 3, 10, 15, 20, 32, 49]
+        
+        XCTAssert(orderedArray1 != orderedArray2)
+    }
+    
+    func test_equalsOperator_notEqualDifferentPredicate() {
+        let orderedArray1: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        let orderedArray2 = OrderedArray<Int>(elements: orderedArray1, predicate: { $1 < $0 })
+        
+        XCTAssert(orderedArray1 != orderedArray2)
+    }
+    
+    // MARK: CustomStringConvertible
+    
+    func test_description_empty() {
+        let orderedArray: OrderedArray<Int> = []
+        
+        XCTAssertEqual(orderedArray.description, orderedArray.data.description)
+    }
+    
+    func test_description_notEmpty() {
+        let orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        XCTAssertEqual(orderedArray.description, orderedArray.data.description)
+    }
+    
+    // MARK: CustomDebugStringConvertible
+    func test_debugDescription_empty() {
+        let orderedArray: OrderedArray<Int> = []
+        
+        XCTAssertEqual(orderedArray.debugDescription, orderedArray.data.debugDescription)
+    }
+    
+    func test_debugDescription_notEmpty() {
+        let orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        XCTAssertEqual(orderedArray.debugDescription, orderedArray.data.debugDescription)
+    }
 }
-
-
-
 

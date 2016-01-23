@@ -23,7 +23,7 @@ protocol OrderedArrayProto : CollectionType, MutableSliceable, Equatable
     // MARK: - Constructors
     init(predicate: Predicate)
     init(minimumCapacity: Int, predicate: Predicate)
-    init(predicate: Predicate, elements: Element...)
+    init(elements: Element..., predicate: Predicate)
     init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate)
     
     // MARK: - Methods
@@ -36,7 +36,7 @@ extension OrderedArrayProto
     // TODO: Figure out why no matter what I try to implement here, it fails with a segfault...
 }
 
-// TODO: Clean this up, remove duplication and implement unit tests
+// TODO: Clean this up and remove duplication
 // TODO: Ugh, swift doesn't support the generic type constraints I would need in order to ensure a OrderedArray<T: Equatable> specialization only applies to types which are Equatable but not Comparable. I guess I'll just have to move most of the code to a protocol extension for a special protocol that they both implement...
 struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
 {
@@ -65,8 +65,7 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
         self.data.reserveCapacity(minimumCapacity)
         self.predicate = predicate
     }
-    // NOTE: Having the predicate first makes more sense here since it's often going to be shorter than the list of elements.
-    init(predicate: Predicate, elements: Element...) {
+    init(elements: Element..., predicate: Predicate) {
         self.init(elements: elements, predicate: predicate)
     }
     init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate) {
@@ -154,7 +153,6 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
             self.data.insert(value, atIndex: index)
         }
     }
-    // TODO: Test this...
     mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index) {
         var elementInsertIndex = i
         
@@ -180,47 +178,6 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
     }
     mutating func removeAll(keepCapacity keepCapacity: Bool = false) {
         self.data.removeAll(keepCapacity: keepCapacity)
-    }
-}
-
-// TODO: test this
-func == <T: Equatable>(lhs: OrderedArrayEquatable<T>, rhs: OrderedArrayEquatable<T>) -> Bool
-{
-    if lhs.count != rhs.count {
-        return false
-    }
-    // NOTE: Since we're ordered, we can just iterate through and compare the values at the same indices
-    for index in 0 ..< lhs.count {
-        // If either the the values aren't equal, we're not equal
-        if lhs.data[index] != rhs.data[index] {
-            return false
-        }
-    }
-    return true
-}
-
-extension OrderedArrayEquatable : CustomStringConvertible, CustomDebugStringConvertible {
-    // NOTE: Implementation taken from the standard Dictionary's implementation: https://github.com/apple/swift/blob/master/stdlib/public/core/HashedCollections.swift.gyb#L1272
-    var description: String {
-        if count == 0 {
-            return "[]"
-        }
-        
-        var result = "["
-        var first = true
-        for v in self {
-            if first {
-                first = false
-            } else {
-                result += ", "
-            }
-            debugPrint(v, terminator: "", toStream: &result)
-        }
-        result += "]"
-        return result
-    }
-    var debugDescription: String {
-        return description
     }
 }
 
@@ -256,8 +213,7 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
         self.init(minimumCapacity: minimumCapacity)
         self.predicate = predicate
     }
-    // NOTE: Having the predicate first makes more sense here since it's often going to be shorter than the list of elements.
-    init(predicate: Predicate, elements: Element...) {
+    init(elements: Element..., predicate: Predicate) {
         self.init(elements: elements, predicate: predicate)
     }
     init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate = { $0 < $1 }) {
@@ -345,7 +301,6 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
             self.data.insert(value, atIndex: index)
         }
     }
-    // TODO: Test this...
     mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index) {
         var elementInsertIndex = i
         
@@ -379,43 +334,32 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
     }
 }
 
-// TODO: test this
 func == <T: Equatable>(lhs: OrderedArray<T>, rhs: OrderedArray<T>) -> Bool
 {
-    if lhs.count != rhs.count {
-        return false
-    }
-    // NOTE: Since we're ordered, we can just iterate through and compare the values at the same indices
-    for index in 0 ..< lhs.count {
-        // If either the the values aren't equal, we're not equal
-        if lhs.data[index] != rhs.data[index] {
-            return false
-        }
-    }
-    return true
+    // NOTE: If the 2 arrays have different predicates that result in the same sort order and otherwise have the same elements, they're considered equal
+    return lhs.data == rhs.data
 }
 
+// TODO: Maybe print the predicate aswell?
 extension OrderedArray : CustomStringConvertible, CustomDebugStringConvertible {
-    // NOTE: Implementation taken from the standard Dictionary's implementation: https://github.com/apple/swift/blob/master/stdlib/public/core/HashedCollections.swift.gyb#L1272
     var description: String {
-        if count == 0 {
-            return "[]"
-        }
-        
-        var result = "["
-        var first = true
-        for v in self {
-            if first {
-                first = false
-            } else {
-                result += ", "
-            }
-            debugPrint(v, terminator: "", toStream: &result)
-        }
-        result += "]"
-        return result
+        return self.data.debugDescription
     }
     var debugDescription: String {
-        return description
+        return self.data.description
+    }
+}
+
+func == <T: Equatable>(lhs: OrderedArrayEquatable<T>, rhs: OrderedArrayEquatable<T>) -> Bool
+{
+    return lhs.data == rhs.data
+}
+
+extension OrderedArrayEquatable : CustomStringConvertible, CustomDebugStringConvertible {
+    var description: String {
+        return self.data.debugDescription
+    }
+    var debugDescription: String {
+        return self.data.description
     }
 }
