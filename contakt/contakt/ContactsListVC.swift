@@ -8,20 +8,6 @@
 
 import UIKit
 
-// TODO: Probably move to it's own file...
-enum ContactsSortOrder {
-    case LastName
-    case FirstName
-    // TODO: Other sort orders? (except only if there's a reasonable secondary sort order...)
-}
-
-enum ContactSearchScope {
-    case All
-    case Names
-    case OtherInfo
-    // TODO: Propably go with: All, Names, Contact, Other
-}
-
 class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, UIGestureRecognizerDelegate
 {
     // MARK: - Properties

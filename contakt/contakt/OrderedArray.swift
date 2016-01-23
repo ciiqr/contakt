@@ -8,9 +8,37 @@
 
 import Foundation
 
+protocol OrderedArrayProto : CollectionType, MutableSliceable, Equatable
+{
+    // MARK: - Types
+    typealias Element: Equatable
+    typealias Predicate = (Element, Element) -> Bool
+    typealias Index = Int
+    
+    // MARK: - Properties
+    // MARK: Instance
+    var data: [Element] { get }
+    var predicate: Predicate { get set }
+    
+    // MARK: - Constructors
+    init(predicate: Predicate)
+    init(minimumCapacity: Int, predicate: Predicate)
+    init(predicate: Predicate, elements: Element...)
+    init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate)
+    
+    // MARK: - Methods
+    mutating func append(value: Element)
+    mutating func reserveCapacity(n: Int)
+}
+
+extension OrderedArrayProto
+{
+    // TODO: Figure out why no matter what I try to implement here, it fails with a segfault...
+}
+
 // TODO: Clean this up, remove duplication and implement unit tests
 // TODO: Ugh, swift doesn't support the generic type constraints I would need in order to ensure a OrderedArray<T: Equatable> specialization only applies to types which are Equatable but not Comparable. I guess I'll just have to move most of the code to a protocol extension for a special protocol that they both implement...
-struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, Equatable
+struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
 {
     // MARK: - Types
     typealias Element = T
@@ -18,11 +46,15 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     
     // MARK: - Properties
     // MARK: Instance
-    private var data = [Element]()
+    var data = [Element]() // TODO: Though, I would prefer this had a private setter...
     var predicate: Predicate {
         didSet {
             self.data.sortInPlace { self.predicate($0, $1) }
         }
+    }
+    // MARK: Calculated
+    var capacity: Int {
+        return self.data.capacity
     }
     
     // MARK: - Constructors
@@ -33,9 +65,7 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
         self.data.reserveCapacity(minimumCapacity)
         self.predicate = predicate
     }
-    // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
-    // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
-    // kv-pairs.
+    // NOTE: Having the predicate first makes more sense here since it's often going to be shorter than the list of elements.
     init(predicate: Predicate, elements: Element...) {
         self.init(elements: elements, predicate: predicate)
     }
@@ -94,12 +124,12 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     // MARK: RangeReplaceableCollectionType
     mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>(subRange: Range<Index>, with newElements: C) {
         // Remove the values in the given range
-        self.data.removeRange(subRange)
+        self.removeRange(subRange)
         
         // Append the new values into the array
-        self.data.appendContentsOf(newElements)
+        self.appendContentsOf(newElements)
     }
-    mutating func reserveCapacity(n: Index.Distance) {
+    mutating func reserveCapacity(n: Int) {
         self.data.reserveCapacity(n)
     }
     mutating func append(value: Element) {
@@ -148,7 +178,7 @@ struct OrderedArrayEquatable<T: Equatable> : CollectionType, MutableSliceable, E
     mutating func removeRange(subRange: Range<Index>) {
         self.data.removeRange(subRange)
     }
-    mutating func removeAll(keepCapacity keepCapacity: Bool) {
+    mutating func removeAll(keepCapacity keepCapacity: Bool = false) {
         self.data.removeAll(keepCapacity: keepCapacity)
     }
 }
@@ -194,7 +224,7 @@ extension OrderedArrayEquatable : CustomStringConvertible, CustomDebugStringConv
     }
 }
 
-struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeReplaceableCollectionType, ArrayLiteralConvertible, Equatable
+struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollectionType, ArrayLiteralConvertible
 {
     // MARK: - Types
     typealias Element = T
@@ -202,12 +232,16 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     
     // MARK: - Properties
     // MARK: Instance
-    private var data = [Element]()
+    var data = [Element]()
     var predicate: Predicate  = { $0 < $1 }
     {
         didSet {
             self.data.sortInPlace { self.predicate($0, $1) }
         }
+    }
+    // MARK: Calculated
+    var capacity: Int {
+        return self.data.capacity
     }
     
     // MARK: - Constructors
@@ -222,9 +256,7 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
         self.init(minimumCapacity: minimumCapacity)
         self.predicate = predicate
     }
-    // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
-    // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
-    // kv-pairs.
+    // NOTE: Having the predicate first makes more sense here since it's often going to be shorter than the list of elements.
     init(predicate: Predicate, elements: Element...) {
         self.init(elements: elements, predicate: predicate)
     }
@@ -283,12 +315,12 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     // MARK: RangeReplaceableCollectionType
     mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>(subRange: Range<Index>, with newElements: C) {
         // Remove the values in the given range
-        self.data.removeRange(subRange)
+        self.removeRange(subRange)
         
         // Append the new values into the array
-        self.data.appendContentsOf(newElements)
+        self.appendContentsOf(newElements)
     }
-    mutating func reserveCapacity(n: Index.Distance) {
+    mutating func reserveCapacity(n: Int) {
         self.data.reserveCapacity(n)
     }
     mutating func append(value: Element) {
@@ -337,7 +369,7 @@ struct OrderedArray<T: Comparable> : CollectionType, MutableSliceable, RangeRepl
     mutating func removeRange(subRange: Range<Index>) {
         self.data.removeRange(subRange)
     }
-    mutating func removeAll(keepCapacity keepCapacity: Bool) {
+    mutating func removeAll(keepCapacity keepCapacity: Bool = false) {
         self.data.removeAll(keepCapacity: keepCapacity)
     }
     
