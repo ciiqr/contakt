@@ -41,7 +41,7 @@ class UIColor_hex: XCTestCase {
         testHexColour(UIColor(hex: hex), r, g, b, 0xFF)
     }
     
-    private func testColour(hexAlpha hexAlpha: Int, r: Int, g: Int, b: Int, a: Int)
+    private func testColour(hexAlpha hexAlpha: Int64, r: Int, g: Int, b: Int, a: Int)
     {
         testHexColour(UIColor(hexAlpha: hexAlpha), r, g, b, a)
     }
