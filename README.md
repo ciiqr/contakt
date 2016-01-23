@@ -1,4 +1,4 @@
-# contakt
+# Contakt ![Project build status][build-status]
 iOS address book app
 
 ![Icon][icon]
@@ -55,6 +55,7 @@ The icon is based on this image [People by Richard Pasqua from the Noun Project]
 
 
 [//]: # (Resource References)
+[build-status]: https://api.travis-ci.org/ciiqr/contakt.svg?branch=master "Master Branches Build Status"
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
 [screenshot-search]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-search.png "Screenshot of Search"
 [screenshot-split]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-split.png "Screenshot of Split View"
