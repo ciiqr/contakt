@@ -53,6 +53,16 @@ class OrderedArray_Tests: XCTestCase
         XCTAssertEqual(orderedArray2.data, [2, 3, 10, 15, 20, 32, 49, 99])
     }
     
+    func test_init_count_repeatedValue_predicate() {
+        let orderedArray = OrderedArray<Int>(count: 10, repeatedValue: 20, predicate: { $1 < $0 })
+        XCTAssert(orderedArray.count == 10)
+        XCTAssertEqual(orderedArray.data, [20, 20, 20, 20, 20, 20, 20, 20, 20, 20])
+        
+        let orderedArray2 = OrderedArray<Int>(count: 10, repeatedValue: 20)
+        XCTAssert(orderedArray2.count == 10)
+        XCTAssertEqual(orderedArray2.data, [20, 20, 20, 20, 20, 20, 20, 20, 20, 20])
+    }
+    
     // MARK: - Properties
     
     func test_predicate_didSet() {
@@ -73,6 +83,30 @@ class OrderedArray_Tests: XCTestCase
         let orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
         let index = orderedArray.binarySearch(forValue: 16)
         XCTAssertEqual(index, 4)
+    }
+    
+    func test_popLast() {
+        var orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        XCTAssertEqual(orderedArray.popLast(), 99)
+        
+        XCTAssertEqual(orderedArray.data, [2, 3, 10, 15, 20, 32, 49])
+    }
+    
+    func test_popLast_empty() {
+        var orderedArray: OrderedArray<Int> = []
+        
+        XCTAssertEqual(orderedArray.popLast(), nil)
+        
+        XCTAssertEqual(orderedArray.data, [])
+    }
+    
+    func test_removeLast() {
+        var orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        XCTAssertEqual(orderedArray.removeLast(), 99)
+        
+        XCTAssertEqual(orderedArray.data, [2, 3, 10, 15, 20, 32, 49])
     }
     
     // MARK: - Protocols

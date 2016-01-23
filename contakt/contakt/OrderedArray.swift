@@ -25,6 +25,7 @@ protocol OrderedArrayProto : CollectionType, MutableSliceable, Equatable
     init(minimumCapacity: Int, predicate: Predicate)
     init(elements: Element..., predicate: Predicate)
     init<U: SequenceType where U.Generator.Element == Element>(elements: U, predicate: Predicate)
+    init(count: Int, repeatedValue: Element, predicate: Predicate)
     
     // MARK: - Methods
     mutating func append(value: Element)
@@ -76,6 +77,10 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
             self.append(value)
         }
     }
+    init(count: Int, repeatedValue: Element, predicate: Predicate) {
+        self.data = [Element](count: count, repeatedValue: repeatedValue)
+        self.predicate = predicate
+    }
     
     // MARK: - Methods
     @warn_unused_result
@@ -85,6 +90,13 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
     // TODO: Consider making this public
     private func indexMatches(index: Index, value: Element) -> Bool {
         return index < self.data.count && self.data[index] == value
+    }
+    //
+    mutating func popLast() -> Element? {
+        return self.data.popLast()
+    }
+    mutating func removeLast() -> Element {
+        return self.data.removeLast()
     }
     
     // MARK: - Protocols
@@ -190,7 +202,7 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
     // MARK: - Properties
     // MARK: Instance
     var data = [Element]()
-    var predicate: Predicate  = { $0 < $1 }
+    var predicate: Predicate = { $0 < $1 }
     {
         didSet {
             self.data.sortInPlace { self.predicate($0, $1) }
@@ -224,6 +236,10 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
             self.append(value)
         }
     }
+    init(count: Int, repeatedValue: Element, predicate: Predicate = { $0 < $1 }) {
+        self.data = [Element](count: count, repeatedValue: repeatedValue)
+        self.predicate = predicate
+    }
     
     // MARK: - Methods
     @warn_unused_result
@@ -233,6 +249,13 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
     // TODO: Consider making this public
     private func indexMatches(index: Index, value: Element) -> Bool {
         return index < self.data.count && self.data[index] == value
+    }
+    //
+    mutating func popLast() -> Element? {
+        return self.data.popLast()
+    }
+    mutating func removeLast() -> Element {
+        return self.data.removeLast()
     }
     
     // MARK: - Protocols
