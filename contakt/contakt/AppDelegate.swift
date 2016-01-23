@@ -37,7 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Change the search bar colours
         UISearchBar.appearance().barTintColor = Visuals.searchBarBackgroundColour
         UISearchBar.appearance().tintColor = Visuals.searchBarTint
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = Visuals.searchBarTextFieldTint
+        if #available(iOS 9.0, *) {
+            UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = Visuals.searchBarTextFieldTint
+        } else {
+            // Fallback on earlier versions
+        }
 
         return true
     }
