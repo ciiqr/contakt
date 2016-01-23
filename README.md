@@ -1,4 +1,4 @@
-# Contakt ![Project build status][build-status]
+# Contakt [![Project build status][build-status]](https://travis-ci.org/ciiqr/contakt)
 iOS address book app
 
 ![Icon][icon]
