@@ -38,16 +38,6 @@
                ReferencedContainer = "container:contakt.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D3B37AF1C4D8D29002F3091"
-               BuildableName = "contaktUITests.xctest"
-               BlueprintName = "contaktUITests"
-               ReferencedContainer = "container:contakt.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
