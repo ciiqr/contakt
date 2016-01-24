@@ -10,8 +10,8 @@ import Foundation
 
 extension String
 {
-    func insensitiveContains(stringToFind: String) -> Bool {
-        return self.lowercaseString.containsString(stringToFind.lowercaseString)
+    func insensitiveContains(find: String) -> Bool {
+        return self.lowercaseString.containsString(find.lowercaseString)
     }
     
     func insensitiveContains(find: CharacterView) -> Bool {
