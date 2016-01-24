@@ -48,6 +48,7 @@
 		3D5893081C4F15C100C11EDB /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */; };
 		3D5893091C4F15C100C11EDB /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */; };
 		3D7E5EFB1C5476330050EAF9 /* String+split-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5EFA1C5476330050EAF9 /* String+split-Tests.swift */; };
+		3D7E5EFD1C54900D0050EAF9 /* Contact+fullName-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5EFC1C54900D0050EAF9 /* Contact+fullName-Tests.swift */; };
 		3D8EF86F1C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */; };
 		3D8EF8701C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */; };
 		3D8EF8721C531E3E00DC2F45 /* ContactSearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */; };
@@ -104,6 +105,7 @@
 		3D5893041C4F0A8400C11EDB /* CollectionType+binarySearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+binarySearch.swift"; sourceTree = "<group>"; };
 		3D5893071C4F15C100C11EDB /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		3D7E5EFA1C5476330050EAF9 /* String+split-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+split-Tests.swift"; sourceTree = "<group>"; };
+		3D7E5EFC1C54900D0050EAF9 /* Contact+fullName-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+fullName-Tests.swift"; sourceTree = "<group>"; };
 		3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsSortOrder.swift; sourceTree = "<group>"; };
 		3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSearchScope.swift; sourceTree = "<group>"; };
 		3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryIndex.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */,
 				3DC87A271C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift */,
 				3D7E5EFA1C5476330050EAF9 /* String+split-Tests.swift */,
+				3D7E5EFC1C54900D0050EAF9 /* Contact+fullName-Tests.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				3D5893091C4F15C100C11EDB /* OrderedDictionary.swift in Sources */,
 				3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */,
 				3D2983681C529A2B00EEC9AE /* Localized.swift in Sources */,
+				3D7E5EFD1C54900D0050EAF9 /* Contact+fullName-Tests.swift in Sources */,
 				3D3B37DE1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,
 				3D5893061C4F0A8400C11EDB /* CollectionType+binarySearch.swift in Sources */,
 				3DB6FD6B1C501C7800197D3B /* OrderedArray.swift in Sources */,

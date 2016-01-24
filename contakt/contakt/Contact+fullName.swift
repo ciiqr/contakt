@@ -14,19 +14,30 @@ extension Contact
     // ie. "Richard M. Stallman" OR "Richard Matthew Stallman"
     @warn_unused_result
     func fullName(middleInitial middleInitial: Bool = false) -> String {
-        let first = formatName(self.firstName, postfix: " ")
-        let middle = formatName(self.middleName, postfix: (middleInitial ? ". " : " "), justInitial: middleInitial)
-        let last = formatName(self.lastName, postfix: " ")
+        let middle = formatName(self.middleName, justInitial: middleInitial)
         
-        return first + middle + last
+        return joinNonEmpty(self.firstName, middle, self.lastName, separator: " ")
     }
     
     @warn_unused_result
-    private func formatName(name: String, postfix: String = "", justInitial: Bool = false) -> String {
-        if name.characters.count > 0 {
-            return justInitial ? String(name.characters.prefix(1)) + postfix
-                : name + postfix
+    private func formatName(name: String, justInitial: Bool) -> String {
+        if justInitial && name.characters.count > 0 {
+            return String(name.characters.prefix(1)) + "."
         }
-        return ""
+        return name
+    }
+    
+    // TODO: Probably move joinNonEmpty
+    @warn_unused_result
+    private func joinNonEmpty<C: CollectionType where C.Generator.Element == String>
+        (parts: C, separator: String = "") -> String
+    {
+        // TODO: Would generally prefer an iterative approach, though this is rather short...
+        return parts.filter({ $0.characters.count > 0 }).joinWithSeparator(separator)
+    }
+    
+    @warn_unused_result
+    private func joinNonEmpty(parts: String..., separator: String = "") -> String {
+        return joinNonEmpty(parts, separator: separator)
     }
 }
