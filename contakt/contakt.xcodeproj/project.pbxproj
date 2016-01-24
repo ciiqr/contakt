@@ -58,6 +58,7 @@
 		3DC42FB11C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
 		3DC42FB21C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
 		3DC87A261C545DA700A36FF0 /* CollectionType+any-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */; };
+		3DC87A281C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC87A271C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		3DB6FD691C501C7800197D3B /* OrderedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedArray.swift; sourceTree = "<group>"; };
 		3DC42FB01C5147BF00432573 /* String+split.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+split.swift"; sourceTree = "<group>"; };
 		3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+any-Tests.swift"; sourceTree = "<group>"; };
+		3DC87A271C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+binarySearch-Tests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +161,8 @@
 		3D3B37911C4D8D29002F3091 /* contakt */ = {
 			isa = PBXGroup;
 			children = (
-				3D3B37A01C4D8D29002F3091 /* Info.plist */,
 				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
+				3D3B37A01C4D8D29002F3091 /* Info.plist */,
 				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
 				3D2983691C52D67200EEC9AE /* Constants.swift */,
 				3D2983661C529A2B00EEC9AE /* Localized.swift */,
@@ -257,6 +259,7 @@
 			children = (
 				3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */,
 				3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */,
+				3DC87A271C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				3D8EF8701C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */,
 				3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */,
 				3D3B37E31C4E758C002F3091 /* Alert.swift in Sources */,
+				3DC87A281C54610500A36FF0 /* CollectionType+binarySearch-Tests.swift in Sources */,
 				3D3B37CE1C4D9245002F3091 /* ContactMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
