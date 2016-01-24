@@ -57,6 +57,7 @@
 		3DB6FD6B1C501C7800197D3B /* OrderedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6FD691C501C7800197D3B /* OrderedArray.swift */; };
 		3DC42FB11C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
 		3DC42FB21C5147BF00432573 /* String+split.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC42FB01C5147BF00432573 /* String+split.swift */; };
+		3DC87A261C545DA700A36FF0 /* CollectionType+any-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryIndex.swift; sourceTree = "<group>"; };
 		3DB6FD691C501C7800197D3B /* OrderedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedArray.swift; sourceTree = "<group>"; };
 		3DC42FB01C5147BF00432573 /* String+split.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+split.swift"; sourceTree = "<group>"; };
+		3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+any-Tests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				3D3B37DF1C4E031A002F3091 /* UIColor+hex-Tests.swift */,
+				3DC87A251C545DA700A36FF0 /* CollectionType+any-Tests.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				3D5893061C4F0A8400C11EDB /* CollectionType+binarySearch.swift in Sources */,
 				3DB6FD6B1C501C7800197D3B /* OrderedArray.swift in Sources */,
 				3D3B37D71C4DE7F5002F3091 /* Dispatch.swift in Sources */,
+				3DC87A261C545DA700A36FF0 /* CollectionType+any-Tests.swift in Sources */,
 				3D3B37E71C4E81D5002F3091 /* ContactLoader.swift in Sources */,
 				3D29836B1C52D67200EEC9AE /* Constants.swift in Sources */,
 				3D3B37EA1C4E87EF002F3091 /* Visuals.swift in Sources */,
