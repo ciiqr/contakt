@@ -39,7 +39,7 @@ When it came to implementing the contact list it was clear that I would need an 
 * Contact details vc should display bottom list of details in a more reasonable way (2-3 days)
 	* Long press on a field to allow editing of that field) (1 hour)
 	* Tapping on one of the contact methods should initiate contact (ie. make phone call to the given number) (1 hour)
-* Unit testing, I did a small amount of unit testing while figuring out and UIColor(hex:) UIColor(hexAlpha:) but overall testing is lacking (5-6 days)
+* Unit testing, theres a decent number of tests already, but we need more (1-2 days)
 
 #### Maybe
 * Styling the last name differently (ie. bolding) in the list (30 minutes)
@@ -55,7 +55,7 @@ The icon is based on this image [People by Richard Pasqua from the Noun Project]
 
 
 [//]: # (Resource References)
-[build-status]: https://api.travis-ci.org/ciiqr/contakt.svg?branch=master "Master Branches Build Status"
+[build-status]: https://api.travis-ci.org/ciiqr/contakt.svg?branch=master "Master Branch's Build Status"
 [initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
 [screenshot-search]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-search.png "Screenshot of Search"
 [screenshot-split]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-split.png "Screenshot of Split View"
