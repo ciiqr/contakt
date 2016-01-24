@@ -38,7 +38,7 @@ extension OrderedArrayProto
 }
 
 // TODO: Clean this up and remove duplication
-// TODO: Ugh, swift doesn't support the generic type constraints I would need in order to ensure a OrderedArray<T: Equatable> specialization only applies to types which are Equatable but not Comparable. I guess I'll just have to move most of the code to a protocol extension for a special protocol that they both implement...
+// TODO: Ugh, swift doesn't support the generic type constraints I would need in order to ensure a OrderedArray<T: Equatable> specialization only applies to types which are Equatable but not Comparable. I guess I'll just have to move most of the code to a protocol extension for a special protocol that they both implement... Except that every time I've tried this building the resulting code failes due to segfaults in the compiler...
 struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
 {
     // MARK: - Types
@@ -133,7 +133,9 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
     }
     
     // MARK: RangeReplaceableCollectionType
-    mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>(subRange: Range<Index>, with newElements: C) {
+    mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>
+        (subRange: Range<Index>, with newElements: C)
+    {
         // Remove the values in the given range
         self.removeRange(subRange)
         
@@ -154,7 +156,8 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
         }
     }
     mutating func insert(value: Element, atIndex index: Index) {
-        assert(index == binarySearch(forValue: value), "You tried to insert a value into an OrderedArrayEquatable but at the wrong position")
+        assert(index == binarySearch(forValue: value),
+            "You tried to insert a value into an OrderedArrayEquatable but at the wrong position")
         
         // If it's already in the data, assign a new value
         if self.indexMatches(index, value: value) {
@@ -165,7 +168,8 @@ struct OrderedArrayEquatable<T: Equatable> : OrderedArrayProto
             self.data.insert(value, atIndex: index)
         }
     }
-    mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index) {
+    mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index)
+    {
         var elementInsertIndex = i
         
         // Insert each element at the appropriate index
@@ -292,7 +296,9 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
     }
     
     // MARK: RangeReplaceableCollectionType
-    mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>(subRange: Range<Index>, with newElements: C) {
+    mutating func replaceRange<C : CollectionType where C.Generator.Element == Element>
+        (subRange: Range<Index>, with newElements: C)
+    {
         // Remove the values in the given range
         self.removeRange(subRange)
         
@@ -313,7 +319,8 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
         }
     }
     mutating func insert(value: Element, atIndex index: Index) {
-        assert(index == binarySearch(forValue: value), "You tried to insert a value into an OrderedArray but at the wrong position")
+        assert(index == binarySearch(forValue: value),
+            "You tried to insert a value into an OrderedArray but at the wrong position")
         
         // If it's already in the data, assign a new value
         if self.indexMatches(index, value: value) {
@@ -324,7 +331,8 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
             self.data.insert(value, atIndex: index)
         }
     }
-    mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index) {
+    mutating func insertContentsOf<S : CollectionType where S.Generator.Element == Element>(newElements: S, at i: Index)
+    {
         var elementInsertIndex = i
         
         // Insert each element at the appropriate index
@@ -359,7 +367,8 @@ struct OrderedArray<T: Comparable> : OrderedArrayProto, RangeReplaceableCollecti
 
 func == <T: Equatable>(lhs: OrderedArray<T>, rhs: OrderedArray<T>) -> Bool
 {
-    // NOTE: If the 2 arrays have different predicates that result in the same sort order and otherwise have the same elements, they're considered equal
+    // NOTE: If the 2 arrays have different predicates that result in the same sort order and otherwise have the same
+    // elements, they're considered equal.
     return lhs.data == rhs.data
 }
 

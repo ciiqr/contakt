@@ -10,7 +10,8 @@ import Foundation
 
 extension Contact
 {
-    // Formats the contact's full name with the option to only have the middle names first initial, ie. "Richard M. Stallman" OR "Richard Matthew Stallman"
+    // Formats the contact's full name with the option to only have the middle names first initial,
+    // ie. "Richard M. Stallman" OR "Richard Matthew Stallman"
     @warn_unused_result
     func fullName(middleInitial middleInitial: Bool = false) -> String {
         let first = formatName(self.firstName, postfix: " ")

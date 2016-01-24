@@ -84,7 +84,9 @@ class ContactMethod
     }
     private func initiateEmail(addr: String) -> Bool
     {
-        if let email = ("mailto:\(addr)").stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) {
+        if let email = ("mailto:\(addr)")
+            .stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
+        {
             if let mailToUrl = NSURL(string: email) {
                 if UIApplication.sharedApplication().canOpenURL(mailToUrl) {
                     return UIApplication.sharedApplication().openURL(mailToUrl)

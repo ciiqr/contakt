@@ -10,7 +10,7 @@ import Foundation
 
 class Dispatch
 {
-    // TODO: Should have a few more functions to account for the intricies of gcd
+    // TODO: Should have a few more functions to account for the intricacies of gcd
     // INFO: Read "Queue Types" from http://www.raywenderlich.com/79149/grand-central-dispatch-tutorial-swift-part-1
     
     static func async(handler: () -> Void)

@@ -160,13 +160,12 @@
 				3D3B37A01C4D8D29002F3091 /* Info.plist */,
 				3D3B379B1C4D8D29002F3091 /* Assets.xcassets */,
 				3D3B37E81C4E87EF002F3091 /* Visuals.swift */,
+				3D2983691C52D67200EEC9AE /* Constants.swift */,
 				3D2983661C529A2B00EEC9AE /* Localized.swift */,
-				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
 				3D3B37D11C4DA6B0002F3091 /* Utilities */,
 				3D3B37C21C4D8E13002F3091 /* Model */,
 				3D8EF86D1C531CD200DC2F45 /* Controller */,
 				3D3B37D01C4DA657002F3091 /* Storyboards */,
-				3D2983691C52D67200EEC9AE /* Constants.swift */,
 			);
 			path = contakt;
 			sourceTree = "<group>";
@@ -262,6 +261,7 @@
 		3D8EF86D1C531CD200DC2F45 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
 				3D3B37CF1C4DA627002F3091 /* View Controllers */,
 				3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */,
 				3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */,

@@ -14,8 +14,9 @@ func ==(lhs: OrderedDictionaryIndex, rhs: OrderedDictionaryIndex) -> Bool
 }
 
 // NOTE: This is a utility class for OrderedDictionary, this is necessary because if we used Int directly as the Index
-// type then we wouldn't be able to have a subscript overload for returning the TValue
-struct OrderedDictionaryIndex : ForwardIndexType, RandomAccessIndexType {
+// type then we wouldn't be able to have a subscript overload for returning the TValue when the TKey is Int
+struct OrderedDictionaryIndex : ForwardIndexType, RandomAccessIndexType
+{
     let index: Int
     init(_ index: Int) {
         self.index = index

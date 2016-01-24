@@ -179,8 +179,9 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
 }
 
 // TODO: test this
-// NOTE: Since OrderedDictionaries value type won't always be Equatable, we only implement equals this if it is Equatable
-func == <TKey: Equatable, TValue: Equatable>(lhs: OrderedDictionary<TKey, TValue>, rhs: OrderedDictionary<TKey, TValue>) -> Bool
+// NOTE: Since OrderedDictionary's TValue won't always be Equatable, we only implement equals this if it is Equatable
+func == <TKey: Equatable, TValue: Equatable>
+    (lhs: OrderedDictionary<TKey, TValue>, rhs: OrderedDictionary<TKey, TValue>) -> Bool
 {
     if lhs.count != rhs.count {
         return false
@@ -198,7 +199,8 @@ func == <TKey: Equatable, TValue: Equatable>(lhs: OrderedDictionary<TKey, TValue
 }
 
 extension OrderedDictionary : CustomStringConvertible, CustomDebugStringConvertible {
-    // NOTE: Implementation taken from the standard Dictionary's implementation: https://github.com/apple/swift/blob/master/stdlib/public/core/HashedCollections.swift.gyb#L1272
+    // NOTE: Implementation taken from the standard Dictionary's implementation:
+    // https://github.com/apple/swift/blob/master/stdlib/public/core/HashedCollections.swift.gyb#L1272
     var description: String {
         if count == 0 {
             return "[:]"

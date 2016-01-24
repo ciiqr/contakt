@@ -22,7 +22,8 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     // This is an unsorted list of contacts
     var contactsList = [Contact]()
-    // This is a sorted dictionary mapping section headers to lists of sorted contacts (section headers are grouped and sorted by the primary sort order and the contacts within each section are sorted by the secondarySortOrder)
+    // This is a sorted dictionary mapping section headers to lists of sorted contacts. Section headers are grouped and
+    // sorted by the primary sort order and the contacts within each section are sorted by the secondarySortOrder.
     var filteredContacts = OrderedDictionary<String, OrderedArrayEquatable<Contact>>()
     
     var searchScope = ContactSearchScope.All {
@@ -80,7 +81,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         if let controllers = self.splitViewController?.viewControllers {
             
             // We have the detailsVC we expected
-            if let detailsVC = (controllers[controllers.count-1] as? UINavigationController)!.topViewController as? ContactDetailsVC {
+            if let detailsVC = (controllers.last as? UINavigationController)?.topViewController as? ContactDetailsVC {
                 self.detailViewController = detailsVC
             }
             else {
@@ -97,7 +98,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         loadContacts()
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransitionToSize(size: CGSize,
+        withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         preselectContactIfNeedBe()
@@ -122,8 +125,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
                 contact = sender as? Contact
             }
             
-            // If we have a Contact instance, and the destination is a ContactDetailsVC instance as we expect, pass the contact along
-            if let contact = contact, controller = (segue.destinationViewController as! UINavigationController).topViewController as? ContactDetailsVC {
+            // If we have a contact and the destination is a ContactDetailsVC(as we expect), pass the contact along
+            let topViewController = (segue.destinationViewController as! UINavigationController).topViewController
+            if let contact = contact, controller = topViewController as? ContactDetailsVC {
                 self.detailViewController = controller
                 controller.contact = contact
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -149,7 +153,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         return titles
     }
     
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String,
+        atIndex index: Int) -> Int
+    {
         // If the index is 0, we go to the search bar
         if index == 0 {
             let searchBarFrame = self.searchController!.searchBar.frame
@@ -190,7 +196,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         return true
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath index: NSIndexPath) {
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+        forRowAtIndexPath index: NSIndexPath)
+    {
         if editingStyle == .Delete {
             removeContact(index)
         }
@@ -201,7 +209,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     // MARK: UITableViewDelegate
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(tableView: UITableView,
+        editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+    {
         // NOTE: This only displays the actions that the specific contact supports
         
         let contact = contactFor(indexPath)
@@ -227,8 +237,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     // MARK: UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        // NOTE: this could potentially be made more efficient by checking if the new search text is simply the old text with something new appended...
-        //       this would allow us to filter based on the currently filtered list.
+        // TODO: Consider this: This could potentially be made more efficient by checking if the new search text is simply the old text with something new appended... This would allow us to filter based on the currently filtered list.
         
         // filter contatcs based on new search text...
         updateFilteredContacts()
@@ -399,14 +408,15 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
             if searchString == nil || contactMatchesSearch(contact, search: searchString!)
             {
                 // Either
-                if let _ = self.filteredContacts[sectionHeader]
+                if self.filteredContacts[sectionHeader] != nil
                 {
                     // append to existing array
                     self.filteredContacts[sectionHeader]!.append(contact)
                 }
                 else // create a new array
                 {
-                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(elements: contact, predicate: sectionContactsOrderPredicate)
+                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(elements: contact,
+                                                            predicate: sectionContactsOrderPredicate)
                 }
             }
         }
@@ -508,7 +518,9 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
         }
         
         // DetailsVC doesn't have a contact but there are items in our filter
-        if self.detailViewController?.contact == nil && filteredContacts.count > 0 && filteredContacts[OrderedDictionaryIndex(0)].value.count > 0 {
+        if self.detailViewController?.contact == nil &&
+            filteredContacts.count > 0 && filteredContacts[OrderedDictionaryIndex(0)].value.count > 0
+        {
             // Set DetailsVC's contact to the first in our filtered list
             self.detailViewController?.contact = filteredContacts[OrderedDictionaryIndex(0)].value[0]
             // TODO: The only problem with this is that the selected row is not highlighted, and I can't use tableView.selectRowAtIndexPath because that will navigate when I don't want it to... So I suppose setting highlighted on the cell's
@@ -526,7 +538,8 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     private func initiateContact(contact: Contact, contactMethod: ContactMethod)
     {
         if !contactMethod.initiateContact() {
-            Alert.displaySimple(self, title: "Error", message: "Couldn't initiate contact with foreign entity \"\(contact.firstName)\"")
+            Alert.displaySimple(self, title: "Error",
+                message: "Couldn't initiate contact with foreign entity \"\(contact.firstName)\"")
         }
     }
     
