@@ -1,4 +1,4 @@
-# Contakt [![Project build status][build-status]](https://travis-ci.org/ciiqr/contakt)
+# Contakt [![Project build status][build-status]](https://travis-ci.org/ciiqr/contakt) [![Project code test coverage][code-coverage-image]](https://codecov.io/github/ciiqr/contakt) [![Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://github.com/ciiqr/contakt/blob/master/LICENSE)
 iOS address book app
 
 ![Icon][icon]
@@ -60,3 +60,4 @@ The icon is based on this image [People by Richard Pasqua from the Noun Project]
 [screenshot-search]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-search.png "Screenshot of Search"
 [screenshot-split]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-split.png "Screenshot of Split View"
 [icon]: http://williamvilleneuve.ca/static-resources/github/contakt/images/icon-styled.png "App icon"
+[code-coverage-image]: https://img.shields.io/codecov/c/github/ciiqr/contakt.svg
