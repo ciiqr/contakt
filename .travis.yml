@@ -1,15 +1,11 @@
+# Well actually swift...
 language: objective-c
-osx_image: xcode7.1
+osx_image: xcode7.2
 script: ./.test.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# xcode_project: contakt/contakt.xcodeproj
-# xcode_scheme: contakt
-# xcode_sdk: iphonesimulator9.2
-
-# Only build PRs and pushes to master
-# TODO: Change to master
+# Only build pull request's and pushes to master
 branches:
   only:
-    - feature/codecov
+    - master
