@@ -51,6 +51,7 @@
 		3D7E5EFD1C54900D0050EAF9 /* Contact+fullName-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5EFC1C54900D0050EAF9 /* Contact+fullName-Tests.swift */; };
 		3D7E5EFF1C54992A0050EAF9 /* String+insensitiveContains-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5EFE1C54992A0050EAF9 /* String+insensitiveContains-Tests.swift */; };
 		3D7E5F041C549D2E0050EAF9 /* Dispatch-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5F031C549D2E0050EAF9 /* Dispatch-Tests.swift */; };
+		3D7E5F071C54A28B0050EAF9 /* OrderedDictionary-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7E5F061C54A28B0050EAF9 /* OrderedDictionary-Tests.swift */; };
 		3D8EF86F1C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */; };
 		3D8EF8701C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */; };
 		3D8EF8721C531E3E00DC2F45 /* ContactSearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */; };
@@ -92,8 +93,6 @@
 		3D3B37A01C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3B37A51C4D8D29002F3091 /* contaktTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = contaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3B37AB1C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D3B37B41C4D8D29002F3091 /* contaktUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contaktUITests.swift; sourceTree = "<group>"; };
-		3D3B37B61C4D8D29002F3091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3B37C31C4D8E62002F3091 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		3D3B37C61C4D8F18002F3091 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactMethod.swift; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 		3D7E5EFC1C54900D0050EAF9 /* Contact+fullName-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+fullName-Tests.swift"; sourceTree = "<group>"; };
 		3D7E5EFE1C54992A0050EAF9 /* String+insensitiveContains-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+insensitiveContains-Tests.swift"; sourceTree = "<group>"; };
 		3D7E5F031C549D2E0050EAF9 /* Dispatch-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dispatch-Tests.swift"; sourceTree = "<group>"; };
+		3D7E5F061C54A28B0050EAF9 /* OrderedDictionary-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary-Tests.swift"; sourceTree = "<group>"; };
 		3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsSortOrder.swift; sourceTree = "<group>"; };
 		3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSearchScope.swift; sourceTree = "<group>"; };
 		3DB6FD661C4F450700197D3B /* OrderedDictionaryIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryIndex.swift; sourceTree = "<group>"; };
@@ -152,7 +152,6 @@
 			children = (
 				3D3B37911C4D8D29002F3091 /* contakt */,
 				3D3B37A81C4D8D29002F3091 /* contaktTests */,
-				3D3B37B31C4D8D29002F3091 /* contaktUITests */,
 				3D3B37901C4D8D29002F3091 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -175,8 +174,8 @@
 				3D2983691C52D67200EEC9AE /* Constants.swift */,
 				3D2983661C529A2B00EEC9AE /* Localized.swift */,
 				3D3B37D11C4DA6B0002F3091 /* Utilities */,
-				3D3B37C21C4D8E13002F3091 /* Model */,
-				3D8EF86D1C531CD200DC2F45 /* Controller */,
+				3D3B37C21C4D8E13002F3091 /* Models */,
+				3D8EF86D1C531CD200DC2F45 /* Controllers */,
 				3D3B37D01C4DA657002F3091 /* Storyboards */,
 			);
 			path = contakt;
@@ -191,16 +190,7 @@
 			path = contaktTests;
 			sourceTree = "<group>";
 		};
-		3D3B37B31C4D8D29002F3091 /* contaktUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3D3B37B41C4D8D29002F3091 /* contaktUITests.swift */,
-				3D3B37B61C4D8D29002F3091 /* Info.plist */,
-			);
-			path = contaktUITests;
-			sourceTree = "<group>";
-		};
-		3D3B37C21C4D8E13002F3091 /* Model */ = {
+		3D3B37C21C4D8E13002F3091 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3D3B37E41C4E81C1002F3091 /* Loaders */,
@@ -208,7 +198,7 @@
 				3D3B37C61C4D8F18002F3091 /* Gender.swift */,
 				3D3B37CC1C4D9245002F3091 /* ContactMethod.swift */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		3D3B37CF1C4DA627002F3091 /* View Controllers */ = {
@@ -275,7 +265,7 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		3D8EF86D1C531CD200DC2F45 /* Controller */ = {
+		3D8EF86D1C531CD200DC2F45 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				3D3B37921C4D8D29002F3091 /* AppDelegate.swift */,
@@ -283,7 +273,7 @@
 				3D8EF8711C531E3E00DC2F45 /* ContactSearchScope.swift */,
 				3D8EF86E1C531D3F00DC2F45 /* ContactsSortOrder.swift */,
 			);
-			name = Controller;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		3D8EF8741C53210800DC2F45 /* Utilities */ = {
@@ -299,6 +289,7 @@
 		3D8EF8751C53211400DC2F45 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
+				3D7E5F061C54A28B0050EAF9 /* OrderedDictionary-Tests.swift */,
 				3D05627B1C53301900D0CCC5 /* OrderedArray-Tests.swift */,
 			);
 			name = "Data Structures";
@@ -442,6 +433,7 @@
 				3D3B37C81C4D8F18002F3091 /* Gender.swift in Sources */,
 				3D5893091C4F15C100C11EDB /* OrderedDictionary.swift in Sources */,
 				3D3B37C51C4D8E62002F3091 /* Contact.swift in Sources */,
+				3D7E5F071C54A28B0050EAF9 /* OrderedDictionary-Tests.swift in Sources */,
 				3D2983681C529A2B00EEC9AE /* Localized.swift in Sources */,
 				3D7E5EFD1C54900D0050EAF9 /* Contact+fullName-Tests.swift in Sources */,
 				3D3B37DE1C4E01F7002F3091 /* CollectionType+any.swift in Sources */,

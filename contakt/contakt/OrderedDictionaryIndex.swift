@@ -41,6 +41,7 @@ struct OrderedDictionaryIndex : ForwardIndexType, RandomAccessIndexType
     func advancedBy(n: OrderedDictionaryIndex.Distance, limit: OrderedDictionaryIndex) -> OrderedDictionaryIndex {
         return OrderedDictionaryIndex(self.index.advancedBy(n, limit: limit.index))
     }
+
     // MARK: BidirectionalIndexType
     @warn_unused_result
     func predecessor() -> OrderedDictionaryIndex {

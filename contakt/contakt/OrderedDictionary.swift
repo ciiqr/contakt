@@ -8,8 +8,8 @@
 
 import Foundation
 
-// TODO: Clean this up, remove duplication and implement unit tests
-
+// TODO: Clean this up a bit
+// TODO: Should have a way to create a normal Dictionary from this, Maybe an initializer on Dictionary...
 struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryLiteralConvertible
 {
     // MARK: - Types
@@ -18,14 +18,18 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     
     // MARK: - Properties
     // MARK: Instance
-    private var data = [Element]()
-    var predicate: Predicate  = { $0 < $1 }
+    var data = [Element]() // TODO: Change this to just have a public getter (private setter)
+    var predicate: Predicate = { $0 < $1 }
     {
         didSet {
             self.data.sortInPlace { (first, second) -> Bool in
                 return self.predicate(first.key, second.key)
             }
         }
+    }
+    // MARK: Calculated
+    var capacity: Int {
+        return self.data.capacity
     }
     
     // MARK: - Constructors
@@ -40,18 +44,16 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
         self.init(minimumCapacity: minimumCapacity)
         self.predicate = predicate
     }
-    // NOTE: Unfortunately there doesn't seem to be a way to pass a dictionaryLiteral when we have other parameters,
-    // also, having the predicate first makes more sense here since it's often going to be shorter than the list of
-    // kv-pairs.
-    init(predicate: Predicate, elements: (TKey, TValue)...) {
+    init(elements: (Key, Value)...) {
+        self.init(elements: elements)
+    }
+    init(elements: (Key, Value)..., predicate: Predicate) {
         self.init(elements: elements, predicate: predicate)
     }
-    // TODO: There doesn't seem to be a way right now to set a field before calling to another constructor...
     init<T: SequenceType where T.Generator.Element == (TKey, TValue)>(elements: T, predicate: Predicate = { $0 < $1 }) {
         self.predicate = predicate
         // The input is likely not ordered, so we must insert one by one...
         // NOTE: if a key is duplicated, we use the last value
-        // TODO: Make sure I'm using this style everywhere it's applicable
         for (key, value) in elements {
             self[key] = value
         }
@@ -63,8 +65,8 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     func binarySearch(forKey key: TKey) -> Int {
         return self.data.binarySearch { self.predicate($0.key, key) }
     }
-    // TODO: Consider making this public
-    private func indexMatches(index: Int, key: TKey) -> Bool {
+    @warn_unused_result
+    func indexMatches(index: Int, key: TKey) -> Bool {
         return index < self.data.count && self.data[index].key == key
     }
     
@@ -178,8 +180,8 @@ struct OrderedDictionary<TKey: Comparable, TValue> : CollectionType, DictionaryL
     }
 }
 
-// TODO: test this
 // NOTE: Since OrderedDictionary's TValue won't always be Equatable, we only implement equals this if it is Equatable
+// TODO: Because of the above, we also need to implement the other operators... Maybe theres a reasonable way we can implement them with protocol extensions...
 func == <TKey: Equatable, TValue: Equatable>
     (lhs: OrderedDictionary<TKey, TValue>, rhs: OrderedDictionary<TKey, TValue>) -> Bool
 {

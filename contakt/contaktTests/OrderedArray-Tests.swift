@@ -133,6 +133,12 @@ class OrderedArray_Tests: XCTestCase
         XCTAssertEqual(orderedArray.endIndex, orderedArray.indexOf(orderedArray.last!)!.successor())
     }
     
+    func test_subscript_Index() {
+        let orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        XCTAssertEqual(orderedArray[4], 20)
+    }
+    
     // MARK: RangeReplaceableCollectionType
     
     func test_replaceRange_subRange_newElements() {
@@ -232,13 +238,22 @@ class OrderedArray_Tests: XCTestCase
         XCTAssert(orderedArray.capacity == 0)
     }
     
-    func test_removeAll_keepCapacity() {
+    func test_removeAll_keepCapacity_false() {
+        var orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
+        
+        orderedArray.removeAll()
+        
+        assertEmpty(orderedArray)
+        XCTAssert(orderedArray.capacity == 0)
+    }
+    
+    func test_removeAll_keepCapacity_true() {
         var orderedArray: OrderedArray<Int> = [3, 10, 20, 32, 49, 15, 2, 99]
         
         orderedArray.removeAll(keepCapacity: true)
         
         assertEmpty(orderedArray)
-        XCTAssert(orderedArray.capacity != 0)
+        XCTAssertGreaterThanOrEqual(orderedArray.capacity, 7)
     }
     
     // MARK: ArrayLiteralConvertible
