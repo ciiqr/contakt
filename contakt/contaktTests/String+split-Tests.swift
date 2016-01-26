@@ -23,6 +23,7 @@ class String_split_Tests: XCTestCase
         let string = "    "
         let string2 = "\t    \t   \t\t\t "
         
+        XCTAssertEqual(string.split().map(String.init), [])
         XCTAssertEqual(string.split(onDelimiter: " ").map(String.init), [])
         XCTAssertEqual(string.split(onDelimiters: " ", "\t").map(String.init), [])
         XCTAssertEqual(string2.split(onDelimiters: " ", "\t").map(String.init), [])
@@ -32,6 +33,7 @@ class String_split_Tests: XCTestCase
         let string = "    test"
         let string2 = "\t    \t   \t\t\t test"
         
+        XCTAssertEqual(string.split().map(String.init), ["test"])
         XCTAssertEqual(string.split(onDelimiter: " ").map(String.init), ["test"])
         XCTAssertEqual(string.split(onDelimiters: " ", "\t").map(String.init), ["test"])
         XCTAssertEqual(string2.split(onDelimiters: " ", "\t").map(String.init), ["test"])
@@ -41,6 +43,7 @@ class String_split_Tests: XCTestCase
         let string = "test    "
         let string2 = "test\t    \t   \t\t\t "
         
+        XCTAssertEqual(string.split().map(String.init), ["test"])
         XCTAssertEqual(string.split(onDelimiter: " ").map(String.init), ["test"])
         XCTAssertEqual(string.split(onDelimiters: " ", "\t").map(String.init), ["test"])
         XCTAssertEqual(string2.split(onDelimiters: " ", "\t").map(String.init), ["test"])
@@ -50,6 +53,7 @@ class String_split_Tests: XCTestCase
         let string = "test    test2              test3"
         let string2 = "test\t    \t   test2\t\t\t test3"
         
+        XCTAssertEqual(string.split().map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string.split(onDelimiter: " ").map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string.split(onDelimiters: " ", "\t").map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string2.split(onDelimiters: " ", "\t").map(String.init), ["test", "test2", "test3"])
@@ -59,6 +63,7 @@ class String_split_Tests: XCTestCase
         let string = "   test    test2              test3   "
         let string2 = "           \ttest\t    \t   test2\t\t\t test3\t  "
         
+        XCTAssertEqual(string.split().map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string.split(onDelimiter: " ").map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string.split(onDelimiters: " ", "\t").map(String.init), ["test", "test2", "test3"])
         XCTAssertEqual(string2.split(onDelimiters: " ", "\t").map(String.init), ["test", "test2", "test3"])

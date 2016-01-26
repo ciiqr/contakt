@@ -160,11 +160,42 @@ class OrderedDictionary_Tests: XCTestCase
     }
     
     // MARK: Dictionary
-    func test_subscript_TKey() {
+    func test_subscript_TKey_get() {
         let od = initialOD
         
         XCTAssertEqual(od[20], "twenty")
         XCTAssertEqual(od[10000], nil)
+    }
+    func test_subscript_TKey_set_newValue() {
+        var od = initialOD
+        
+        od[20] = "TWENTY"
+        
+        XCTAssert(od == [
+            2: "two",
+            3: "three",
+            10: "ten",
+            15: "fifteen",
+            20: "TWENTY",
+            32: "thirty two",
+            49: "forty nine",
+            99: "ninety nine",
+        ])
+    }
+    func test_subscript_TKey_set_nil() {
+        var od = initialOD
+        
+        od[20] = nil
+        
+        XCTAssert(od == [
+            2: "two",
+            3: "three",
+            10: "ten",
+            15: "fifteen",
+            32: "thirty two",
+            49: "forty nine",
+            99: "ninety nine",
+        ])
     }
     func test_indexForKey() {
         let od = initialOD
