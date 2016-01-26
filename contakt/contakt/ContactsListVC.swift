@@ -24,7 +24,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
     var contactsList = [Contact]()
     // This is a sorted dictionary mapping section headers to lists of sorted contacts. Section headers are grouped and
     // sorted by the primary sort order and the contacts within each section are sorted by the secondarySortOrder.
-    var filteredContacts = OrderedDictionary<String, OrderedArrayEquatable<Contact>>()
+    var filteredContacts = OrderedDictionary<String, OrderedArray<Contact>>()
     
     var searchScope = ContactSearchScope.All {
         didSet {
@@ -415,7 +415,7 @@ class ContactsListVC: UITableViewController, UISearchResultsUpdating, UISearchBa
                 }
                 else // create a new array
                 {
-                    self.filteredContacts[sectionHeader] = OrderedArrayEquatable(elements: contact,
+                    self.filteredContacts[sectionHeader] = OrderedArray(elements: contact,
                                                             predicate: sectionContactsOrderPredicate)
                 }
             }
