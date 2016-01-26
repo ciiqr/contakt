@@ -316,3 +316,299 @@ class OrderedArray_Tests: XCTestCase
     }
 }
 
+class OrderedArrayEquatable_Tests: XCTestCase
+{
+    // MARK: - Test Utilities
+    
+    func assertEmpty(orderedArrayEquatable: OrderedArrayEquatable<Int>) {
+        XCTAssert(orderedArrayEquatable.count == 0)
+        XCTAssertEqual(orderedArrayEquatable, OrderedArrayEquatable<Int>() { $0 < $1 })
+    }
+    
+    // MARK: - Constructors
+    
+    func test_init_predicate() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(predicate: { $1 < $0 })
+        assertEmpty(orderedArrayEquatable)
+    }
+    
+    func test_init_minimumCapacity_predicate() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(minimumCapacity: 10, predicate: { $1 < $0 })
+        assertEmpty(orderedArrayEquatable)
+        
+        XCTAssertGreaterThanOrEqual(orderedArrayEquatable.data.capacity, 10)
+    }
+    
+    func test_init_elements_predicate() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99], predicate: { $1 < $0 })
+        XCTAssert(orderedArrayEquatable.count == 8)
+        XCTAssertEqual(orderedArrayEquatable.data, [99, 49, 32, 20, 15, 10, 3, 2])
+        
+        let orderedArrayEquatable2 = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        XCTAssert(orderedArrayEquatable2.count == 8)
+        XCTAssertEqual(orderedArrayEquatable2.data, [2, 3, 10, 15, 20, 32, 49, 99])
+    }
+    
+    func test_init_count_repeatedValue_predicate() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(count: 10, repeatedValue: 20, predicate: { $1 < $0 })
+        XCTAssert(orderedArrayEquatable.count == 10)
+        XCTAssertEqual(orderedArrayEquatable.data, [20, 20, 20, 20, 20, 20, 20, 20, 20, 20])
+        
+        let orderedArrayEquatable2 = OrderedArrayEquatable<Int>(count: 10, repeatedValue: 20) { $0 < $1 }
+        XCTAssert(orderedArrayEquatable2.count == 10)
+        XCTAssertEqual(orderedArrayEquatable2.data, [20, 20, 20, 20, 20, 20, 20, 20, 20, 20])
+    }
+    
+    // MARK: - Properties
+    
+    func test_predicate_didSet() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        orderedArrayEquatable.predicate = { $1 < $0 }
+        XCTAssertEqual(orderedArrayEquatable.data, [99, 49, 32, 20, 15, 10, 3, 2])
+    }
+    
+    // MARK: - Methods
+    
+    func test_binarySearch_forValue_existingValue() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        let index = orderedArrayEquatable.binarySearch(forValue: 49)
+        XCTAssertEqual(index, 6)
+    }
+    
+    func test_binarySearch_forValue_newValue() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        let index = orderedArrayEquatable.binarySearch(forValue: 16)
+        XCTAssertEqual(index, 4)
+    }
+    
+    func test_popLast() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.popLast(), 99)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 49])
+    }
+    
+    func test_popLast_empty() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.popLast(), nil)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [])
+    }
+    
+    func test_removeLast() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.removeLast(), 99)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 49])
+    }
+    
+    // MARK: - Protocols
+    
+    // MARK: CollectionType
+    
+    func test_startIndex_empty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        XCTAssertEqual(orderedArrayEquatable.startIndex, orderedArrayEquatable.endIndex)
+    }
+    
+    func test_startIndex_notEmpty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        XCTAssertEqual(orderedArrayEquatable.startIndex, 0)
+    }
+    
+    func test_endIndex_empty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        XCTAssertEqual(orderedArrayEquatable.endIndex, 0)
+    }
+    
+    func test_endIndex_notEmpty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        XCTAssertEqual(orderedArrayEquatable.endIndex, orderedArrayEquatable.indexOf(orderedArrayEquatable.last!)!.successor())
+    }
+    
+    func test_subscript_Index() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable[4], 20)
+    }
+    
+    // MARK: RangeReplaceableCollectionType
+    
+    func test_replaceRange_subRange_newElements() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.replaceRange(2...4, with: [8, 9, 11, 21, 100])
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 8, 9, 11, 21, 32, 49, 99, 100])
+        
+    }
+    
+    func test_reserveCapacity() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        orderedArrayEquatable.reserveCapacity(16)
+        
+        XCTAssertGreaterThanOrEqual(orderedArrayEquatable.capacity, 16)
+    }
+    
+    func test_append() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        orderedArrayEquatable.append(3)
+        orderedArrayEquatable.append(10)
+        orderedArrayEquatable.append(20)
+        orderedArrayEquatable.append(32)
+        orderedArrayEquatable.append(49)
+        orderedArrayEquatable.append(15)
+        orderedArrayEquatable.append(2)
+        orderedArrayEquatable.append(99)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 49, 99])
+    }
+    
+    func test_appendContentsOf() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        orderedArrayEquatable.appendContentsOf([3, 10, 20, 32, 49, 15, 2, 99])
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 49, 99])
+    }
+    
+    func test_insert() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.insert(35, atIndex: 6)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 35, 49, 99])
+    }
+    
+    func test_insertContentsOf() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.insertContentsOf([4, 6, 7, 8], at: 2)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 4, 6, 7, 8, 10, 15, 20, 32, 49, 99])
+    }
+    
+    func test_removeAtIndex() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.removeAtIndex(3), 15)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 20, 32, 49, 99])
+    }
+    
+    func test_removeFirst() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.removeFirst(), 2)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [3, 10, 15, 20, 32, 49, 99])
+    }
+    
+    func test_removeFirst_n() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.removeFirst(3)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [15, 20, 32, 49, 99])
+    }
+    
+    func test_removeRange() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.removeRange(2...5)
+        
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 49, 99])
+    }
+    
+    func test_removeAll() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.removeAll()
+        
+        assertEmpty(orderedArrayEquatable)
+        XCTAssert(orderedArrayEquatable.capacity == 0)
+    }
+    
+    func test_removeAll_keepCapacity_false() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.removeAll()
+        
+        assertEmpty(orderedArrayEquatable)
+        XCTAssert(orderedArrayEquatable.capacity == 0)
+    }
+    
+    func test_removeAll_keepCapacity_true() {
+        var orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        orderedArrayEquatable.removeAll(keepCapacity: true)
+        
+        assertEmpty(orderedArrayEquatable)
+        XCTAssertGreaterThanOrEqual(orderedArrayEquatable.capacity, 7)
+    }
+    
+    // MARK: ArrayLiteralConvertible
+    
+    func test_init_arrayLiteral() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssert(orderedArrayEquatable.count == 8)
+        XCTAssertEqual(orderedArrayEquatable.data, [2, 3, 10, 15, 20, 32, 49, 99])
+    }
+    
+    // MARK: Equatable
+    
+    func test_equalsOperator_equal() {
+        let orderedArrayEquatable1 = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        let orderedArrayEquatable2 = OrderedArrayEquatable<Int>(elements: [2, 3, 10, 15, 20, 32, 49, 99]) { $0 < $1 }
+        
+        XCTAssert(orderedArrayEquatable1 == orderedArrayEquatable2)
+    }
+    
+    func test_equalsOperator_notEqual() {
+        let orderedArrayEquatable1 = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        let orderedArrayEquatable2 = OrderedArrayEquatable<Int>(elements: [2, 3, 10, 15, 20, 32, 49]) { $0 < $1 }
+        
+        XCTAssert(orderedArrayEquatable1 != orderedArrayEquatable2)
+    }
+    
+    func test_equalsOperator_notEqualDifferentPredicate() {
+        let orderedArrayEquatable1 = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        let orderedArrayEquatable2 = OrderedArrayEquatable<Int>(elements: orderedArrayEquatable1, predicate: { $1 < $0 })
+        
+        XCTAssert(orderedArrayEquatable1 != orderedArrayEquatable2)
+    }
+    
+    // MARK: CustomStringConvertible
+    
+    func test_description_empty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.description, orderedArrayEquatable.data.description)
+    }
+    
+    func test_description_notEmpty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.description, orderedArrayEquatable.data.description)
+    }
+    
+    // MARK: CustomDebugStringConvertible
+    func test_debugDescription_empty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>() { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.debugDescription, orderedArrayEquatable.data.debugDescription)
+    }
+    
+    func test_debugDescription_notEmpty() {
+        let orderedArrayEquatable = OrderedArrayEquatable<Int>(elements: [3, 10, 20, 32, 49, 15, 2, 99]) { $0 < $1 }
+        
+        XCTAssertEqual(orderedArrayEquatable.debugDescription, orderedArrayEquatable.data.debugDescription)
+    }
+}
+
