@@ -383,6 +383,30 @@ class OrderedDictionary_Tests: XCTestCase
         
         XCTAssertEqual(od.debugDescription, "[2: \"two\", 3: \"three\", 10: \"ten\", 15: \"fifteen\", 20: \"twenty\", 32: \"thirty two\", 49: \"forty nine\", 99: \"ninety nine\"]")
     }
+    
+    // MARK: - OrderedDictionaryIndex
+    // TODO: Add more tests for OrderedDictionaryIndex (despite the fact that they appear to be already covered by the above) and move to it's own file
+    
+    func test_advancedBy() {
+        let odIndex = OrderedDictionaryIndex(10)
+        
+        XCTAssertEqual(odIndex.advancedBy(2), OrderedDictionaryIndex(12))
+        XCTAssertEqual(odIndex.advancedBy(-2), OrderedDictionaryIndex(8))
+    }
+    
+    func test_advancedBy_limit_withinLimit() {
+        let odIndex = OrderedDictionaryIndex(10)
+        
+        XCTAssertEqual(odIndex.advancedBy(2, limit: OrderedDictionaryIndex(20)), OrderedDictionaryIndex(12))
+        XCTAssertEqual(odIndex.advancedBy(-2, limit: OrderedDictionaryIndex(-10)), OrderedDictionaryIndex(8))
+    }
+    
+    func test_advancedBy_limit_outsideLimit() {
+        let odIndex = OrderedDictionaryIndex(10)
+        
+        XCTAssertEqual(odIndex.advancedBy(6, limit: OrderedDictionaryIndex(15)), OrderedDictionaryIndex(15))
+        XCTAssertEqual(odIndex.advancedBy(-60, limit: OrderedDictionaryIndex(-15)), OrderedDictionaryIndex(-15))
+    }
 }
 
 
