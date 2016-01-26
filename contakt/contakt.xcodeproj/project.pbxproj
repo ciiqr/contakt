@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D05627C1C53301900D0CCC5 /* OrderedArray-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D05627B1C53301900D0CCC5 /* OrderedArray-Tests.swift */; };
+		3D0D770B1C5712A900DEDB0B /* Contact-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D770A1C5712A900DEDB0B /* Contact-Tests.swift */; };
 		3D29835E1C528F6300EEC9AE /* Contact+fullName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */; };
 		3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */; };
 		3D2983611C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */; };
@@ -78,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		3D05627B1C53301900D0CCC5 /* OrderedArray-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OrderedArray-Tests.swift"; sourceTree = "<group>"; };
+		3D0D770A1C5712A900DEDB0B /* Contact-Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact-Tests.swift"; sourceTree = "<group>"; };
 		3D29835D1C528F6300EEC9AE /* Contact+fullName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+fullName.swift"; sourceTree = "<group>"; };
 		3D2983601C52937100EEC9AE /* Contact+photoOrDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+photoOrDefault.swift"; sourceTree = "<group>"; };
 		3D2983631C52985600EEC9AE /* String+insensitiveContains.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+insensitiveContains.swift"; sourceTree = "<group>"; };
@@ -137,6 +139,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D0D77091C57129300DEDB0B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3D0D770A1C5712A900DEDB0B /* Contact-Tests.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		3D29835C1C51AB9F00EEC9AE /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +194,7 @@
 		3D3B37A81C4D8D29002F3091 /* contaktTests */ = {
 			isa = PBXGroup;
 			children = (
+				3D0D77091C57129300DEDB0B /* Models */,
 				3D8EF8741C53210800DC2F45 /* Utilities */,
 				3D3B37AB1C4D8D29002F3091 /* Info.plist */,
 			);
@@ -450,6 +461,7 @@
 				3D05627C1C53301900D0CCC5 /* OrderedArray-Tests.swift in Sources */,
 				3D2983621C52937100EEC9AE /* Contact+photoOrDefault.swift in Sources */,
 				3D3B37E01C4E031A002F3091 /* UIColor+hex-Tests.swift in Sources */,
+				3D0D770B1C5712A900DEDB0B /* Contact-Tests.swift in Sources */,
 				3D8EF8731C531E3E00DC2F45 /* ContactSearchScope.swift in Sources */,
 				3D8EF8701C531D3F00DC2F45 /* ContactsSortOrder.swift in Sources */,
 				3D29835F1C528F6300EEC9AE /* Contact+fullName.swift in Sources */,
