@@ -56,8 +56,8 @@ The icon is based on this image [People by Richard Pasqua from the Noun Project]
 
 [//]: # (Resource References)
 [build-status]: https://api.travis-ci.org/ciiqr/contakt.svg?branch=master "Master Branch's Build Status"
-[initial-diagram]: http://williamvilleneuve.ca/static-resources/github/contakt/images/initial-design.jpg "Initial Design Sketch"
-[screenshot-search]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-search.png "Screenshot of Search"
-[screenshot-split]: http://williamvilleneuve.ca/static-resources/github/contakt/images/screenshot-split.png "Screenshot of Split View"
-[icon]: http://williamvilleneuve.ca/static-resources/github/contakt/images/icon-styled.png "App icon"
+[initial-diagram]: https://github.com/ciiqr/contakt-readme/raw/master/images/initial-design.jpg "Initial Design Sketch"
+[screenshot-search]: https://github.com/ciiqr/contakt-readme/raw/master/images/screenshot-search.png "Screenshot of Search"
+[screenshot-split]: https://github.com/ciiqr/contakt-readme/raw/master/images/screenshot-split.png "Screenshot of Split View"
+[icon]: https://github.com/ciiqr/contakt-readme/raw/master/images/icon-styled.png "App icon"
 [code-coverage-image]: https://img.shields.io/codecov/c/github/ciiqr/contakt.svg
